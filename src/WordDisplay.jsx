@@ -1,11 +1,23 @@
 import React from "react";
 
-const WordDisplay = ({ word }) => {
-  return (
-    <div className="aWord">
-	<h1>{word}</h1>
-    </div>
-  );
-};
+
+class WordDisplay extends React.Component {
+  constructor () {
+    super();
+  }
+
+  clickHandler () {
+    console.log(this);
+  }
+
+  render () {
+    return (
+      <div className="aWord"
+	   onClick={this.clickHandler.bind(this)}>
+	  <h1>{this.props.word}</h1>
+      </div>
+    );
+  }
+}
 
 export default WordDisplay
