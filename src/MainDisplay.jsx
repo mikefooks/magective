@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { createStore } from "redux";
 
 import WordBoard from "./WordBoard.jsx";
-import { bootstrap } from "./reducers";
 
-const store = createStore(bootstrap);
+import store from "./store";
 
 
 class MainDisplay extends Component {
@@ -13,16 +11,20 @@ class MainDisplay extends Component {
   }
 
   render () {
+    let currentState = store.getState(),
+	targetWords = currentState.target.words,
+	quiverWords = currentState.quiver.words;
+    
     return (
       <div className="mainDisplay">
 	  <WordBoard
 	    id="wordTarget"
 	    role="target"
-	    words={store.target.words} />
+	    words={targetWords} />
 	  <WordBoard
 	    id="wordQuiver"
 	    role="quiver" 
-	    words={store.quiver.words} />
+	    words={quiverWords} />
       </div>
     );  
   }

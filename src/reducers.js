@@ -10,12 +10,12 @@ let someWords = "This is super-duper dope and I really hope "
 
 someWords = someWords.split(" ");
 
-export const wordFactory = (word, key) => {
-  return { word, key };
+const wordFactory = (word, idx) => {
+  return { word, idx };
 };
 
-export const initialState = {
-  board: {
+const initialState = {
+  target: {
     words: []
   },
   quiver: {

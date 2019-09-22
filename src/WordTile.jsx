@@ -8,12 +8,13 @@ class WordTile extends React.Component {
     super();
   }
 
-  move ()
+  clickHandler () {
+    console.log("boogers.");
+  }
 
   render () {
     return (
       <div className="aWord"
-	   key={this.props.key}
 	   onClick={this.clickHandler}>
 	  <h1>{this.props.word}</h1>
       </div>
