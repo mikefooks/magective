@@ -1,23 +1,24 @@
 import React from "react";
 
+import { moveWord } from "./reducers";
 
-class WordDisplay extends React.Component {
+
+class WordTile extends React.Component {
   constructor () {
     super();
   }
 
-  clickHandler () {
-    console.log(this);
-  }
+  move ()
 
   render () {
     return (
       <div className="aWord"
-	   onClick={this.clickHandler.bind(this)}>
+	   key={this.props.key}
+	   onClick={this.clickHandler}>
 	  <h1>{this.props.word}</h1>
       </div>
     );
   }
 }
 
-export default WordDisplay
+export default WordTile

@@ -1,51 +1,28 @@
-import _ from "lodash"
-
 import React, { Component } from "react";
 import { createStore } from "redux";
-import WordDisplay from "./WordDisplay.jsx";
 
+import WordBoard from "./WordBoard.jsx";
+import { bootstrap } from "./reducers";
 
-class WordQuiver extends Component {
-  generateWordDisplays () {
-    return this.props.words.map((word, idx) => {
-      return <WordDisplay word={word} key={idx} />
-    });
-  }
+const store = createStore(bootstrap);
 
-  render () {
-    return (
-      <div className="wordQuiver">
-	  {this.generateWordDisplays()}
-      </div>
-    );
-  }
-}
-
-class WordBoard extends Component {
-  render () {
-    return (
-      <div className="wordBoard">	  
-      </div>
-    );
-  }
-}
 
 class MainDisplay extends Component {
   constructor () {
     super();
-
-    this.state = {
-      words: 'this is really actually pretty dope'.split(' ')
-    };
   }
 
   render () {
-    let shuffledWords = _.shuffle(this.state.words);
-    
     return (
       <div className="mainDisplay">
-	  <WordBoard />
-	  <WordQuiver words={shuffledWords} />
+	  <WordBoard
+	    id="wordTarget"
+	    role="target"
+	    words={store.target.words} />
+	  <WordBoard
+	    id="wordQuiver"
+	    role="quiver" 
+	    words={store.quiver.words} />
       </div>
     );  
   }

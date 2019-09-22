@@ -10,11 +10,11 @@ let someWords = "This is super-duper dope and I really hope "
 
 someWords = someWords.split(" ");
 
-const wordFactory = (word, key) => {
+export const wordFactory = (word, key) => {
   return { word, key };
 };
 
-const initialState = {
+export const initialState = {
   board: {
     words: []
   },
@@ -31,21 +31,15 @@ export function bootstrap (state, action) {
   return state;
 }
 
-export function wordToBoard (state, action) {
-  let newState = _.cloneDeep(state),
-      wordObj = _.clone(_.find(state.quiver.words,
-			       word =>
-				 word.key == action.key));
+export function moveWord (state, action) {
+  const source = action.type == MOVE_WORD_TO_QUIVER ? "quiver" : "board",
+	target = source == "quiver" ? "board" : "quiver",
+	wordObj = _.clone(_.find(state[source].words,
+				 word => word.key == action.key));
 
-  newState.board.words.push(wordObj);
-  
-  newState.quiver.words = _.filter(state.quiver.words,
-				   word =>
-				     word.key != action.key);
+  const newState = _.cloneDeep(state);
 
-  return newState;
+  newState[target].words.push(wordObj);
+  newState[source].words = _.filter(state[source].words,
+				    word => word.key != action.key);
 }
-
-export function wordToQuiver (state, action) {
-
-}  
