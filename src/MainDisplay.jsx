@@ -1,6 +1,7 @@
 import _ from "lodash"
 
 import React, { Component } from "react";
+import { createStore } from "redux";
 import WordDisplay from "./WordDisplay.jsx";
 
 
