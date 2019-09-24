@@ -15,7 +15,7 @@ const wordFactory = (word, idx) => {
 };
 
 const initialState = {
-  target: {
+  board: {
     words: []
   },
   quiver: {
@@ -23,15 +23,7 @@ const initialState = {
   }
 };
 
-export function bootstrap (state, action) {
-  if (state == undefined) {
-    state = initialState;
-  }
-
-  return state;
-}
-
-export function moveWord (state, action) {
+export function bootstrap (state = initialState, action) {
   const source = action.type == MOVE_WORD_TO_QUIVER ? "quiver" : "board",
 	target = source == "quiver" ? "board" : "quiver",
 	wordObj = _.clone(_.find(state[source].words,
@@ -42,4 +34,6 @@ export function moveWord (state, action) {
   newState[target].words.push(wordObj);
   newState[source].words = _.filter(state[source].words,
 				    word => word.key != action.key);
+
+  return newState;
 }

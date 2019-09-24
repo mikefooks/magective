@@ -4,16 +4,16 @@ export const MOVE_WORD_TO_QUIVER = "MOVE_WORD_TO_QUIVER";
 
 /* In future, these constants can be assigned to RESTful URLs. */
 
-export function wordToBoardFactory (key) {
+export function wordToBoard (idx) {
   return {
     type: MOVE_WORD_TO_BOARD,
-    key
+    idx
   };
 }
 
-export function wordToQuiverFactory (key) {
+export function wordToQuiver (idx) {
   return {
     type: MOVE_WORD_TO_QUIVER,
-    key
+    idx
   };
 }

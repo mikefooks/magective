@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-
-import WordBoard from "./WordBoard.jsx";
+import React, { Component } from "react"
 
 import store from "./store";
+
+import WordBoard from "./WordBoard.jsx";
 
 
 class MainDisplay extends Component {
@@ -12,15 +12,15 @@ class MainDisplay extends Component {
 
   render () {
     let currentState = store.getState(),
-	targetWords = currentState.target.words,
+	boardWords = currentState.board.words,
 	quiverWords = currentState.quiver.words;
     
     return (
       <div className="mainDisplay">
 	  <WordBoard
-	    id="wordTarget"
-	    role="target"
-	    words={targetWords} />
+	    id="wordBoard"
+	    role="board"
+	    words={boardWords} />
 	  <WordBoard
 	    id="wordQuiver"
 	    role="quiver" 

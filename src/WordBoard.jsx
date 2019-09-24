@@ -12,8 +12,13 @@ class WordBoard extends React.Component {
   render () {
     let classNames = "wordBoard " + this.props.role,
 	tiles = _.map(this.props.words, word => {
-	  return <WordTile word={word.word} key={word.idx} />
+	  return <WordTile
+		   word={word.word}
+		   key={word.idx}
+		   idx={word.idx} />
 	});
+
+    console.log(this.props);
 
     return (
       <div className={classNames}>

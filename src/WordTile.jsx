@@ -1,6 +1,8 @@
 import React from "react";
 
-import { moveWord } from "./reducers";
+import store from "./store";
+
+import { wordToBoard, wordToQuiver } from "./actions";
 
 
 class WordTile extends React.Component {
@@ -8,14 +10,14 @@ class WordTile extends React.Component {
     super();
   }
 
-  clickHandler () {
-    console.log("boogers.");
+  move () {
+    store.dispatch(wordToBoard(this.props.idx));
   }
 
   render () {
     return (
       <div className="aWord"
-	   onClick={this.clickHandler}>
+	   onClick={this.move.bind(this)}>
 	  <h1>{this.props.word}</h1>
       </div>
     );
