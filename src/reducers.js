@@ -24,16 +24,19 @@ const initialState = {
 };
 
 export function bootstrap (state = initialState, action) {
-  const source = action.type == MOVE_WORD_TO_QUIVER ? "quiver" : "board",
-	target = source == "quiver" ? "board" : "quiver",
-	wordObj = _.clone(_.find(state[source].words,
-				 word => word.key == action.key));
+  if (action.type == MOVE_WORD_TO_BOARD) {
+    const source = "quiver",
+	  target = "board",
+	  wordObj = _.clone(_.find(state[source].words,
+				   word => word.idx == action.idx));
 
-  const newState = _.cloneDeep(state);
+    const newState = _.cloneDeep(state);
 
-  newState[target].words.push(wordObj);
-  newState[source].words = _.filter(state[source].words,
-				    word => word.key != action.key);
-
-  return newState;
+    newState[target].words.push(wordObj);
+    newState[source].words = _.filter(state[source].words,
+				      word => word.idx != action.idx);
+    console.log(newState);
+    return newState;    
+  }
+  return state;
 }
