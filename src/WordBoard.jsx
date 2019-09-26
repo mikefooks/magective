@@ -1,10 +1,20 @@
 import _ from "lodash";
 
 import React from "react";
+import { connect } from "react-redux";
+
 import WordTile from "./WordTile.jsx";
 
 
-class WordBoard extends React.Component {
+const mapStateToProps = (state, ownProps) => {
+  if (ownProps.role == "board") {
+    return { words: state.board.words };
+  } else if (ownProps.role == "quiver") {
+    return { words: state.quiver.words };
+  }
+};
+
+class ConnectedWordBoard extends React.Component {
   constructor () {
     super();
   }
@@ -27,5 +37,7 @@ class WordBoard extends React.Component {
     );
   }
 }
+
+const WordBoard = connect(mapStateToProps)(ConnectedWordBoard);
 
 export default WordBoard;
