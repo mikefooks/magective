@@ -2,7 +2,8 @@ import _ from "lodash";
 
 import {
   MOVE_WORD_TO_BOARD,
-  MOVE_WORD_TO_QUIVER
+  MOVE_WORD_TO_QUIVER,
+  SENTENCE_TO_QUIVER,
 } from "./actions";
 
 let someWords = "This is super-duper dope and I really hope "
@@ -10,8 +11,10 @@ let someWords = "This is super-duper dope and I really hope "
 
 someWords = someWords.split(" ");
 
-const wordFactory = (word, idx) => {
-  return { word, idx };
+let count = 0;
+
+const wordFactory = (word) => {
+  return { word, idx: count++ };
 };
 
 const initialState = {
@@ -36,7 +39,16 @@ export function bootstrap (state = initialState, action) {
     newState[source].words = _.filter(state[source].words,
 				      word => word.idx != action.idx);
     console.log(newState);
-    return newState;    
+    return newState;
+
+  } else if (action.type == SENTENCE_TO_QUIVER) {
+    const newState = _.cloneDeep(state),
+	  newWords = _.map(action.sentenceStr.split(" "), wordFactory);
+
+    newState.quiver.words = state["quiver"].words.concat(newWords);
+
+    return newState;
   }
+  
   return state;
 }

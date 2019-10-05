@@ -28,8 +28,6 @@ class ConnectedWordBoard extends React.Component {
 		   idx={word.idx} />
 	});
 
-    console.log(this.props);
-
     return (
       <div className={classNames}>
 	  {tiles}

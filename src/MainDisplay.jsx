@@ -3,6 +3,7 @@ import React, { Component } from "react"
 import store from "./store";
 
 import WordBoard from "./WordBoard.jsx";
+import SentenceEntry from "./SentenceEntry.jsx";
 
 
 class MainDisplay extends Component {
@@ -16,15 +17,18 @@ class MainDisplay extends Component {
 	quiverWords = currentState.quiver.words;
     
     return (
-      <div className="mainDisplay">
-	  <WordBoard
-	    id="wordBoard"
-	    role="board"
-	    words={boardWords} />
-	  <WordBoard
-	    id="wordQuiver"
-	    role="quiver" 
-	    words={quiverWords} />
+      <div>
+	  <div className="mainDisplay">
+	      <WordBoard
+		id="wordBoard"
+		role="board"
+		words={boardWords} />
+	      <WordBoard
+		id="wordQuiver"
+		role="quiver" 
+		words={quiverWords} />
+	  </div>
+	  <SentenceEntry />
       </div>
     );  
   }

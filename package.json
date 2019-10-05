@@ -25,6 +25,7 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.15",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

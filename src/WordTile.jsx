@@ -2,7 +2,7 @@ import React from "react";
 
 import store from "./store";
 
-import { wordToBoard, wordToQuiver } from "./actions";
+import { wordToBoard } from "./actions";
 
 
 class WordTile extends React.Component {
