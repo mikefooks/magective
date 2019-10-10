@@ -1,7 +1,7 @@
 import _ from "lodash";
 
-import store from "./store";
-import { sentenceToQuiver } from "./actions";
+import store from "../state_mgmt/store";
+import { sentenceToQuiver } from "../state_mgmt/actions";
 
 import React from "react";
 

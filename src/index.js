@@ -1,6 +1,6 @@
-import MainDisplay from "./MainDisplay.jsx";
-import store from "./store";
-import style from "./styles.scss";
+import MainDisplay from "./components/MainDisplay.jsx";
+import store from "./state_mgmt/store";
+import style from "./styles/main.scss";
 
 import React from "react";
 import ReactDOM from "react-dom";

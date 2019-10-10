@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-import store from "./store";
+import store from "../state_mgmt/store";
 
 import WordBoard from "./WordBoard.jsx";
 import SentenceEntry from "./SentenceEntry.jsx";
