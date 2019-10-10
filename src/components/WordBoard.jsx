@@ -3,8 +3,11 @@ import _ from "lodash";
 import React from "react";
 import { connect } from "react-redux";
 
+import SentenceTile from "./SentenceTile.jsx";
 import WordTile from "./WordTile.jsx";
 
+
+let sentenceCounter = 1000;
 
 const mapStateToProps = (state, ownProps) => {
   if (ownProps.role == "board") {
@@ -21,12 +24,8 @@ class ConnectedWordBoard extends React.Component {
 
   render () {
     let classNames = "wordBoard " + this.props.role,
-	tiles = _.map(this.props.words, word => {
-	  return <WordTile
-		   role={this.props.role}
-		   word={word.word}
-		   key={word.idx}
-		   idx={word.idx} />
+	tiles = _.map(this.props.sentences, sent => {
+	  return <SentenceTile key={sentenceCounter++} sentence={sent} />
 	});
 
     return (

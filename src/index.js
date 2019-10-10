@@ -6,6 +6,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
+import dTypes from "./state_mgmt/data_types.js"
+
 
 const wrapper = document.getElementById("container");
 
@@ -15,6 +17,5 @@ ReactDOM.render(
    </Provider>
   ), wrapper
 );
-
 
 

@@ -13,8 +13,8 @@ class MainDisplay extends Component {
 
   render () {
     let currentState = store.getState(),
-	boardWords = currentState.board.words,
-	quiverWords = currentState.quiver.words;
+	boardSents = currentState.board,
+	quiverSents = currentState.quiver;
     
     return (
       <div>
@@ -22,11 +22,11 @@ class MainDisplay extends Component {
 	      <WordBoard
 		id="wordBoard"
 		role="board"
-		words={boardWords} />
+		sentences={boardSents} />
 	      <WordBoard
 		id="wordQuiver"
 		role="quiver" 
-		words={quiverWords} />
+		sentences={quiverSents} />
 	  </div>
 	  <SentenceEntry />
       </div>
