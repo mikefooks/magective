@@ -2,7 +2,7 @@ import React from "react";
 
 import store from "./store";
 
-import { wordToBoard } from "./actions";
+import { wordToBoard, wordToQuiver } from "./actions";
 
 
 class WordTile extends React.Component {
@@ -11,7 +11,11 @@ class WordTile extends React.Component {
   }
 
   move () {
-    store.dispatch(wordToBoard(this.props.idx));
+    if (this.props.role == "quiver") {
+      store.dispatch(wordToBoard(this.props.idx));
+    } else if (this.props.role == "board") {
+      store.dispatch(wordToQuiver(this.props.idx));
+    }
   }
 
   render () {

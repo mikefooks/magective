@@ -1,15 +1,23 @@
 * {
+    box-sizing: border-box;
+}
+
+body {
     margin: 0;
     padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, small {
     font-family: cardo, serif;
     font-weight: 400;
     font-style: normal;
+    margin: 0;
+    padding: 0;
 }
 
 div#container {
     position: absolute;
     width: 100%;
-    height: 100%;
 }
 
 div.mainDisplay {
@@ -38,10 +46,20 @@ div.aWord {
     outline: 1px dotted red;
 }
 
+div.sentenceEntry {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 0px;
+}
+
 input[type="text"] {
     font-size: 21px;
+    line-height: 31px;
 }
 
 button {
+    font-size: 21px;
     height: 35px;
+    vertical-align: bottom;
 }

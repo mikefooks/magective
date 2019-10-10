@@ -2,13 +2,24 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8' />
-    <meta name='viewport' content='width="device-width,initial-scale=1" />
-    <link rel="stylsheet" src="https://use.typekit.net/zce8ffd.css" />
+    <meta name='viewport' content='width="device-width,initial-scale=1"' />
+    <link rel="stylesheet" src="https://use.typekit.net/zce8ffd.css" />
   </head>
   <body>
     <div id='outerContainer'>
       <div id='container'>
       </div>
     </div>
+    <script type="text/javascript">
+      (function (w, d, undefined) {
+      "use strict";
+
+      let container = d.querySelector("div#container"),
+      windowHeight = w.innerHeight;
+
+      container.style.height = windowHeight + "px";
+
+      }).call(this, window, document, undefined);
+    </script>
   </body>
 </html>

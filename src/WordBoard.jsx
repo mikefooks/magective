@@ -23,6 +23,7 @@ class ConnectedWordBoard extends React.Component {
     let classNames = "wordBoard " + this.props.role,
 	tiles = _.map(this.props.words, word => {
 	  return <WordTile
+		   role={this.props.role}
 		   word={word.word}
 		   key={word.idx}
 		   idx={word.idx} />
