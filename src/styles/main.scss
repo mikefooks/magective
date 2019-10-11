@@ -15,6 +15,10 @@ h1, h2, h3, h4, h5, h6, p, small {
     padding: 0;
 }
 
+h1.retired {
+    color: #e01d1d;
+}
+
 div#container {
     position: absolute;
     width: 100%;
@@ -40,7 +44,7 @@ div.wordQuiver {
     width: 50%;
 }
 
-div.aWord {
+div.wordTile {
     display: inline-block;
     margin-right: 1em;
     outline: 1px dotted red;

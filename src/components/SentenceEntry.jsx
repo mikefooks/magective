@@ -17,7 +17,6 @@ class SentenceEntry extends React.Component {
     let inputValue = evt.target.previousSibling.value;
     store.dispatch(sentenceToQuiver(inputValue));
     evt.target.previousSibling.value = "";
-    console.log(store.getState());
   }
   
   render () {

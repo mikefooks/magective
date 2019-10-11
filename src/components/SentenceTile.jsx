@@ -13,7 +13,7 @@ class SentenceTile extends React.Component {
   render () {
     let wordList = this.props.sentence.getTokens(),
 	tiles = _.map(wordList, word => {
-	  return <WordTile key={wordCounter++} word={word.word} />
+	  return <WordTile key={wordCounter++} wordId={word.id} />
 	});
   
     return (

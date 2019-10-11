@@ -28,7 +28,6 @@ class ConnectedWordBoard extends React.Component {
   }
 
   render () {
-    console.log(this.props);
     let classNames = "wordBoard " + this.props.role,
 	tiles = _.map(this.props.sentences, sent => {
 	  return <SentenceTile key={sentenceCounter++} sentence={sent} />
