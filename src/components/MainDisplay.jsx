@@ -1,6 +1,5 @@
+import _ from "lodash";
 import React, { Component } from "react"
-
-import store from "../state_mgmt/store";
 
 import WordBoard from "./WordBoard.jsx";
 import SentenceEntry from "./SentenceEntry.jsx";
@@ -12,26 +11,22 @@ class MainDisplay extends Component {
   }
 
   render () {
-    let currentState = store.getState(),
-	boardSents = currentState.board,
-	quiverSents = currentState.quiver;
-    
+    console.log(this.props);
+
     return (
       <div>
 	  <div className="mainDisplay">
 	      <WordBoard
 		id="wordBoard"
-		role="board"
-		sentences={boardSents} />
+		role="target" />
 	      <WordBoard
 		id="wordQuiver"
-		role="quiver" 
-		sentences={quiverSents} />
+		role="quiver" />
 	  </div>
 	  <SentenceEntry />
       </div>
-    );  
+    );
   }
 }
-
+    
 export default MainDisplay;

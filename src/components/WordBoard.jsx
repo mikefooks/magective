@@ -10,12 +10,17 @@ import WordTile from "./WordTile.jsx";
 let sentenceCounter = 1000;
 
 const mapStateToProps = (state, ownProps) => {
-  if (ownProps.role == "board") {
-    return { words: state.board.words };
+  let sentences;
+
+  if (ownProps.role == "target") {
+    sentences = _.map(state.target, id => state.sentences[id]);
   } else if (ownProps.role == "quiver") {
-    return { words: state.quiver.words };
+    sentences = _.map(state.quiver, id => state.sentences[id]);
   }
-};
+  
+  return { sentences };
+}
+
 
 class ConnectedWordBoard extends React.Component {
   constructor () {
@@ -23,6 +28,7 @@ class ConnectedWordBoard extends React.Component {
   }
 
   render () {
+    console.log(this.props);
     let classNames = "wordBoard " + this.props.role,
 	tiles = _.map(this.props.sentences, sent => {
 	  return <SentenceTile key={sentenceCounter++} sentence={sent} />

@@ -1,45 +1,37 @@
 import _ from "lodash";
+import uuid4 from "uuid4";
 
 import { Sentence } from "./data_types";
 
 import {
-  MOVE_WORD_TO_BOARD,
-  MOVE_WORD_TO_QUIVER,
-  SENTENCE_TO_QUIVER,
+  SENTENCE_TO_BOARD,
+  SENTENCE_TO_QUIVER
 } from "./actions";
 
 const testSentence = new Sentence("This is pretty cool and I'm confident it'll all work out.");
-
-let count = 0;
+const testSentHash = uuid4();
 
 const initialState = {
+  sentences: {},
   board: [],
-  quiver: [testSentence]
+  quiver: [ testSentHash ]
 };
 
+initialState.sentences[testSentHash] = testSentence;
+
 export function bootstrap (state = initialState, action) {
-  if (action.type == MOVE_WORD_TO_BOARD) {
-    const source = "quiver",
-	  target = "board",
-	  wordObj = _.clone(_.find(state[source],
-				   word => word.idx == action.idx));
+  switch (action.type) {
+  case SENTENCE_TO_QUIVER:
+    let newState = _.cloneDeep(state);
+    let newSentence = new Sentence(action.payload);
+    let id = uuid4();
 
-    const newState = _.cloneDeep(state);
-
-    newState[target].push(wordObj);
-    newState[source] = _.filter(state[source],
-				word => word.idx != action.idx);
+    newState.sentences[id] = newSentence;
+    newState.quiver.push(id);
     console.log(newState);
+    
     return newState;
-
-  } else if (action.type == SENTENCE_TO_QUIVER) {
-    const newState = _.cloneDeep(state),
-	  newWords = _.map(action.sentenceStr.split(" "), wordFactory);
-
-    newState.quiver = state["quiver"].concat(newWords);
-
-    return newState;
+  default:
+    return state;
   }
-  
-  return state;
 }
