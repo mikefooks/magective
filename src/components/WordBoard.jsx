@@ -13,9 +13,9 @@ const mapStateToProps = (state, ownProps) => {
   let sentences;
 
   if (ownProps.role == "target") {
-    sentences = _.map(state.target, id => state.sentences[id]);
+    sentences = state.target;
   } else if (ownProps.role == "quiver") {
-    sentences = _.map(state.quiver, id => state.sentences[id]);
+    sentences = state.quiver;
   }
   
   return { sentences };
@@ -28,16 +28,26 @@ class ConnectedWordBoard extends React.Component {
   }
 
   render () {
-    let classNames = "wordBoard " + this.props.role,
-	tiles = _.map(this.props.sentences, sent => {
-	  return <SentenceTile key={sentenceCounter++} sentence={sent} />
-	});
+    let areSentences = this.props.sentences.length > 0 ? true : false;
+    let classNames = "wordBoard " + this.props.role;
 
-    return (
-      <div className={classNames}>
-	  {tiles}
-      </div>
-    );
+    if (areSentences) {
+      let tiles = _.map(this.props.sentences, sentId => {
+	return <SentenceTile key={sentenceCounter++} sentenceId={sentId} />
+      });
+
+      return (
+	<div className={classNames}>
+	    {tiles}
+	</div>
+      );
+    } else {
+      return (
+	<div className={classNames}>
+	    <h2>Nothing here...</h2>
+	</div>
+      );
+    }
   }
 }
 

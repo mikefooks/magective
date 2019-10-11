@@ -10,10 +10,6 @@ class Sentence {
 		       w => new Word(_.toLower(w)), this.id);
     this.len = this.words.length;
   }
-
-  getTokens () {
-    return this.words;
-  }
 }
 
 class Word {

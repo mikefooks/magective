@@ -3,10 +3,12 @@ export const SENTENCE_TO_QUIVER = "SENTENCE_TO_QUIVER";
 export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD"; 
 
 
-export function sentenceToTarget (id) {
+export function sentenceToTarget (sentenceId) {
   return {
     type: SENTENCE_TO_TARGET,
-    id
+    payload: {
+      sentenceId
+    }
   };
 }
 

@@ -12,7 +12,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    switchActivate: () => dispatch(switchActivateWord(ownProps.wordId))
+    switchActivate: function (evt) {
+      evt.stopPropagation();
+      dispatch(switchActivateWord(ownProps.wordId))
+    }
   };
 };
 
