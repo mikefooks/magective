@@ -22,7 +22,7 @@ initialState.sentences[testSentence.id] = testSentence;
 _.each(testSentence.words, function (word) {
   initialState.words[word.id] = word;
 });
-  
+
 
 export function bootstrap (state = initialState, action) {
   let newState = _.cloneDeep(state);
@@ -33,17 +33,17 @@ export function bootstrap (state = initialState, action) {
 
       newState.sentences[newSentence.id] = newSentence;
       newState.quiver.push(newSentence.id);
-      _.each(newSentence.getTokens(), word => {
+      _.each(newSentence.words, word => {
 	newState.words[word.id] = word;
       });
 
       return newState;
-      
+
     case SENTENCE_TO_TARGET:
       newState.quiver = _.filter(newState.quiver,
 				 id => id != action.payload.sentenceId);
       newState.target.push(action.payload.sentenceId);
-      
+
       return newState;
 
     case SWITCH_ACTIVATE_WORD:
@@ -54,7 +54,7 @@ export function bootstrap (state = initialState, action) {
       newState.words[action.payload.wordId] = newWord;
 
       return newState;
-	
+
     default:
       return state;
   }

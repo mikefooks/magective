@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import WordTile from "./WordTile.jsx";
-
 import { sentenceToTarget } from "../state_mgmt/actions";
+
 
 let wordCounter = 0;
 
@@ -18,24 +17,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 }
 
-class ConnectedSentenceTile extends React.Component {
-  constructor () {
-    super();
-  }
-
-  render () {
-    let wordList = this.props.sentence.words,
+const ConnectedSentenceTile = ({ sentence, sentenceToTarget }) => {
+  const wordList = sentence.words,
 	tiles = _.map(wordList, word => {
 	  return <WordTile key={wordCounter++} wordId={word.id} />
 	});
   
-    return (
-      <div className="sentenceTile"
-	   onClick={this.props.sentenceToTarget}>
-	  {tiles}
-      </div>
-    );
-  }
+  return (
+    <div className="sentenceTile"
+	 onClick={sentenceToTarget}>
+	{tiles}
+    </div>
+  );
 }
 
 const SentenceTile = connect(mapStateToProps,

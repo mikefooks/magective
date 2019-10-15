@@ -14,27 +14,24 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     switchActivate: function (evt) {
       evt.stopPropagation();
-      dispatch(switchActivateWord(ownProps.wordId))
+      dispatch(switchActivateWord(ownProps.wordId));
     }
   };
 };
 
-class ConnectedWordTile extends React.Component {
-  constructor () {
-    super();
-  }
-
-  render () {
-    let wordStr = this.props.word.word,
-	active = this.props.word.active ? "active" : "retired";
-    
-    return (
-      <div className="wordTile">
-	  <h1 className={active}
-	  onClick={this.props.switchActivate}>{wordStr}</h1>
-      </div>
-    );
-  }
+const ConnectedWordTile = ({ word, switchActivate }) => {
+  const wordStr = word.word,
+	active = word.active ? "active" : "retired";
+  
+  return (
+    <div className="wordTile">
+	<h1
+	  className={active}
+	  onClick={switchActivate}>
+	    {wordStr}
+	</h1>
+    </div>
+  );
 }
 
 const WordTile = connect(mapStateToProps,
