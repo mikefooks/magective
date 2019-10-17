@@ -10,23 +10,23 @@ import WordTile from "./WordTile.jsx";
 let sentenceCounter = 1000;
 
 const mapStateToProps = (state, ownProps) => {
-  let sentences;
+  let sentenceIds;
 
   if (ownProps.role == "target") {
-    sentences = state.target;
+    sentenceIds = state.target;
   } else if (ownProps.role == "quiver") {
-    sentences = state.quiver;
+    sentenceIds = state.quiver;
   }
   
-  return { sentences };
+  return { sentenceIds };
 }
 
-const ConnectedWordBoard = ({ sentences, role }) => {
-  let areSentences = sentences.length > 0 ? true : false;
-  let classNames = "wordBoard " + role;
+export const WordBoard = ({ sentenceIds, role }) => {
+  const areSentences = sentenceIds.length > 0,
+	classNames = "wordBoard " + role;
 
   if (areSentences) {
-    let tiles = _.map(sentences, sentId => {
+    let tiles = _.map(sentenceIds, sentId => {
       return <SentenceTile key={sentenceCounter++} sentenceId={sentId} />
     });
 
@@ -44,6 +44,4 @@ const ConnectedWordBoard = ({ sentences, role }) => {
   }
 }
 
-const WordBoard = connect(mapStateToProps)(ConnectedWordBoard);
-
-export default WordBoard;
+export default connect(mapStateToProps)(WordBoard);

@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-const ConnectedWordTile = ({ word, switchActivate }) => {
+export const WordTile = ({ word, switchActivate }) => {
   const wordStr = word.word,
 	active = word.active ? "active" : "retired";
   
@@ -34,7 +34,5 @@ const ConnectedWordTile = ({ word, switchActivate }) => {
   );
 }
 
-const WordTile = connect(mapStateToProps,
-			 mapDispatchToProps)(ConnectedWordTile);
-
-export default WordTile
+export default connect(mapStateToProps,
+		       mapDispatchToProps)(WordTile);
