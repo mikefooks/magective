@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { Word } from "../state_mgmt/data_types";
-import { WordTile } from "./WordTile.jsx";
+import { Word } from "../../src/state_mgmt/data_types";
+import { WordTile } from "../../src/components/WordTile.jsx";
 
 
 const mockWord = new Word("hey");

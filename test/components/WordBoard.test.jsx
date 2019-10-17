@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { WordBoard } from "./WordBoard.jsx";
+import { WordBoard } from "../../src/components/WordBoard.jsx";
 
 
 const mockData = {
@@ -20,6 +20,4 @@ describe("WordBoard", () => {
     expect(wrapperWithProps.find("div").hasClass("wordBoard")).toBe(true);
     expect(wrapperWithProps.find("div").hasClass("test")).toBe(true);
   });
-
-  console.log(wrapperWithProps.find("div"));
 });

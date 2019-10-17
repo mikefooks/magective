@@ -1,5 +1,7 @@
+import _ from "lodash";
 import React from "react";
 import { connect } from "react-redux";
+
 import WordTile from "./WordTile.jsx";
 import { sentenceToTarget } from "../state_mgmt/actions";
 
@@ -17,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 }
 
-const ConnectedSentenceTile = ({ sentence, sentenceToTarget }) => {
+export const SentenceTile = ({ sentence, sentenceToTarget }) => {
   const wordList = sentence.words,
 	tiles = _.map(wordList, word => {
 	  return <WordTile key={wordCounter++} wordId={word.id} />
@@ -31,7 +33,5 @@ const ConnectedSentenceTile = ({ sentence, sentenceToTarget }) => {
   );
 }
 
-const SentenceTile = connect(mapStateToProps,
-			     mapDispatchToProps)(ConnectedSentenceTile);
-
-export default SentenceTile;
+export default connect(mapStateToProps,
+		       mapDispatchToProps)(SentenceTile);
