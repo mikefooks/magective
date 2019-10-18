@@ -8,7 +8,10 @@ import { SentenceTile } from "../../src/components/SentenceTile.jsx";
 const mockSentence = new Sentence("this is good.");
 
 describe("SentenceTile", () => {
-  const wrapperWithProps = shallow(<SentenceTile sentence={mockSentence} />);
+  const mockClickFunc = jest.fn();
+  const wrapperWithProps = shallow(<SentenceTile
+				     sentence={mockSentence}
+				     sentenceToTarget={mockClickFunc} />);
   
   it("should render at all", () => {
     expect(wrapperWithProps.length).toBe(1);
@@ -20,5 +23,10 @@ describe("SentenceTile", () => {
 
   it("should have the right number of child elements", () => {
     expect(wrapperWithProps.children().length).toBe(3);
+  });
+
+  it("should respond to click events", () => {
+    wrapperWithProps.find("div").simulate("click");
+    expect(mockClickFunc).toHaveBeenCalled();
   });
 });

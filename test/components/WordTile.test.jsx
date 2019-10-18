@@ -8,7 +8,10 @@ import { WordTile } from "../../src/components/WordTile.jsx";
 const mockWord = new Word("hey");
 
 describe("WordTile", () => {
-  const wrapperWithProps = shallow(<WordTile word={ mockWord } />);
+  const mockClickFunc = jest.fn();
+  const wrapperWithProps = shallow(<WordTile
+				     word={mockWord}
+				     switchActivate={mockClickFunc} />);
 
   it("should exist", () => {
     expect(wrapperWithProps.length).toBe(1);
@@ -20,5 +23,10 @@ describe("WordTile", () => {
 
   it("displays the word correctly", () => {
     expect(wrapperWithProps.find("h1").text()).toBe("hey");
+  });
+
+  it("responds to click events", () => {
+    wrapperWithProps.find("h1").simulate("click");
+    expect(mockClickFunc).toHaveBeenCalled();
   });
 });
