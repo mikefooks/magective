@@ -24,8 +24,6 @@ export const SentenceTile = ({ sentence, sentenceToTarget }) => {
 	tiles = _.map(wordList, word => {
 	  return <WordTile key={wordCounter++} wordId={word.id} />
 	});
-
-  console.log(sentence);
   
   return (
     <div className="sentenceTile"

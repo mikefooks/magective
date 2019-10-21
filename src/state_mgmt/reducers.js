@@ -28,38 +28,36 @@ initialState = initialState.set("words",
 				initialState.get("words").merge(newWords));
 
 export function bootstrap (state = initialState, action) {
-  /*  
   switch (action.type) {
     case SENTENCE_TO_QUIVER:
-      let newSentence = new Sentence(action.payload);
+      const newSentence = new Sentence(action.payload);
+      const newWords = newSentence.words.reduce((obj, word) => {
+	obj[word.id] = word;
+	return obj;
+      }, {});
 
-      newState.sentences[newSentence.id] = newSentence;
-      newState.quiver.push(newSentence.id);
-      _.each(newSentence.words, word => {
-	newState.words[word.id] = word;
-      });
-
-      return newState;
+      return state.update("words", col => col.merge(newWords))
+		  .update("sentences", col =>
+		    col.set(newSentence.id, newSentence))
+		  .update("quiver", col =>
+		    col.add(newSentence.id));
 
     case SENTENCE_TO_TARGET:
-      newState.quiver = _.filter(newState.quiver,
-				 id => id != action.payload.sentenceId);
-      newState.target.push(action.payload.sentenceId);
-
-      return newState;
+      const sentId = action.payload.sentenceId;
+      return state.update("quiver", col =>
+	            col.filterNot(id => id == sentId))
+		  .update("target", col =>
+		    col.add(sentId));
 
     case SWITCH_ACTIVATE_WORD:
-      let theWord = newState.words[action.payload.wordId];
-      let newWord = _.cloneDeep(theWord);
+      const wordId = action.payload.wordId;
 
-      newWord.active = true ? false : true;
-      newState.words[action.payload.wordId] = newWord;
-
-      return newState;
-
-    default:
-      return state;
+      return state.updateIn([ "words", wordId ], word => {
+	const newWord = _.clone(word);
+	newWord.active = newWord.active ? false : true;
+	return newWord;
+      });
   }
-   */
+
   return state;
 }
