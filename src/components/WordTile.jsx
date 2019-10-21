@@ -6,7 +6,7 @@ import { switchActivateWord } from "../state_mgmt/actions";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    word: state.words[ownProps.wordId]
+    word: state.getIn(["words", ownProps.wordId])
   };
 }
 

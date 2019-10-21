@@ -13,20 +13,20 @@ const mapStateToProps = (state, ownProps) => {
   let sentenceIds;
 
   if (ownProps.role == "target") {
-    sentenceIds = state.target;
+    sentenceIds = state.get("target");
   } else if (ownProps.role == "quiver") {
-    sentenceIds = state.quiver;
+    sentenceIds = state.get("quiver");
   }
   
   return { sentenceIds };
 }
 
 export const WordBoard = ({ sentenceIds, role }) => {
-  const areSentences = sentenceIds.length > 0,
+  const areSentences = sentenceIds.size > 0,
 	classNames = "wordBoard " + role;
 
   if (areSentences) {
-    let tiles = _.map(sentenceIds, sentId => {
+    let tiles = sentenceIds.map(sentId => {
       return <SentenceTile key={sentenceCounter++} sentenceId={sentId} />
     });
 

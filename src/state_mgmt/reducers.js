@@ -1,5 +1,6 @@
 import _ from "lodash";
 import uuid4 from "uuid4";
+import { Map, OrderedSet } from "immutable";
 
 import { Sentence } from "./data_types";
 
@@ -11,22 +12,23 @@ import {
 
 const testSentence = new Sentence("This is pretty cool and I'm confident it'll all work out.");
 
-const initialState = {
-  words: {},
-  sentences: {},
-  target: [],
-  quiver: [ testSentence.id ]
-};
-
-initialState.sentences[testSentence.id] = testSentence;
-_.each(testSentence.words, function (word) {
-  initialState.words[word.id] = word;
+let initialState = Map({
+  words: Map(),
+  sentences: Map(),
+  target: OrderedSet(),
+  quiver: OrderedSet([ testSentence.id ])
 });
 
+initialState = initialState.setIn(["sentences", testSentence.id], testSentence);
+const newWords = Map(testSentence.words.reduce((obj, word) => {
+  obj[word.id] = word;
+  return obj;
+}, {}));
+initialState = initialState.set("words",
+				initialState.get("words").merge(newWords));
 
 export function bootstrap (state = initialState, action) {
-  let newState = _.cloneDeep(state);
-
+  /*  
   switch (action.type) {
     case SENTENCE_TO_QUIVER:
       let newSentence = new Sentence(action.payload);
@@ -58,4 +60,6 @@ export function bootstrap (state = initialState, action) {
     default:
       return state;
   }
+   */
+  return state;
 }

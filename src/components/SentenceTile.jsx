@@ -9,7 +9,7 @@ import { sentenceToTarget } from "../state_mgmt/actions";
 let wordCounter = 0;
 
 const mapStateToProps = (state, ownProps) => {
-  let sentence = state.sentences[ownProps.sentenceId];
+  const sentence = state.getIn(["sentences", ownProps.sentenceId]);
   return { sentence };
 }
 
@@ -24,6 +24,8 @@ export const SentenceTile = ({ sentence, sentenceToTarget }) => {
 	tiles = _.map(wordList, word => {
 	  return <WordTile key={wordCounter++} wordId={word.id} />
 	});
+
+  console.log(sentence);
   
   return (
     <div className="sentenceTile"
