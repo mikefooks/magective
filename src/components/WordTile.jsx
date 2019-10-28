@@ -5,9 +5,10 @@ import { switchActivateWord } from "../state_mgmt/actions";
 
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    word: state.getIn(["words", ownProps.wordId])
-  };
+  const word = state.getIn(["words", ownProps.wordId])
+  const isFocused = state.get("focused") == ownProps.wordId;
+
+  return { word, isFocused };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -19,12 +20,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export const WordTile = ({ word, switchActivate }) => {
-  const wordStr = word.word,
-	active = word.active ? "active" : "retired";
+export const WordTile = ({ word, isFocused, switchActivate }) => {
+  const wordStr = word.get("word");
+  const active = word.get("active") ? "active" : "retired";
   
   return (
-    <div className="wordTile">
+    <div className={ isFocused ? "wordTile focused" : "wordTile" }>
 	<h1
 	  className={active}
 	  onClick={switchActivate}>

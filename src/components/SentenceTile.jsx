@@ -10,7 +10,9 @@ let wordCounter = 0;
 
 const mapStateToProps = (state, ownProps) => {
   const sentence = state.getIn(["sentences", ownProps.sentenceId]);
-  return { sentence };
+  const isFocused = state.get("focused") == ownProps.sentenceId;
+
+  return { sentence, isFocused };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -19,14 +21,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 }
 
-export const SentenceTile = ({ sentence, sentenceToTarget }) => {
-  const wordList = sentence.words,
-	tiles = _.map(wordList, word => {
-	  return <WordTile key={wordCounter++} wordId={word.id} />
-	});
+export const SentenceTile = ({ sentence, isFocused, sentenceToTarget }) => {
+  const tiles = sentence.get("words").map(word => {
+    return <WordTile key={wordCounter++} wordId={word.get("id")} />
+  });
   
   return (
-    <div className="sentenceTile"
+    <div className={ isFocused ? "sentenceTile focused" : "sentenceTile" }
 	 onClick={sentenceToTarget}>
 	{tiles}
     </div>

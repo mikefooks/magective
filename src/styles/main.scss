@@ -17,6 +17,8 @@ font-display:auto;font-style:italic;font-weight:400;
 body {
     margin: 0;
     padding: 0;
+    background-color: #111;
+    color: #eee;
 }
 
 h1, h2, h3, h4, h5, h6, p, small {
@@ -56,10 +58,13 @@ div.wordQuiver {
     width: 50%;
 }
 
+.focused {
+    outline: 1px red dashed;
+}
+
 div.wordTile {
     display: inline-block;
     margin-right: 1em;
-    outline: 1px dotted red;
 }
 
 div.sentenceEntry {

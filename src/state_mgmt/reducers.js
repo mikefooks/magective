@@ -10,37 +10,38 @@ import {
   SWITCH_ACTIVATE_WORD
 } from "./actions";
 
-const testSentence = new Sentence("This is pretty cool and I'm confident it'll all work out.");
+const testSentence = Sentence("This is pretty cool and I'm confident it'll all work out.");
 
 let initialState = Map({
+  focused: testSentence.getIn(["words", 0, "id"]),
   words: Map(),
   sentences: Map(),
   target: OrderedSet(),
-  quiver: OrderedSet([ testSentence.id ])
+  quiver: OrderedSet([ testSentence.get("id") ])
 });
 
-initialState = initialState.setIn(["sentences", testSentence.id], testSentence);
-const newWords = Map(testSentence.words.reduce((obj, word) => {
-  obj[word.id] = word;
+initialState = initialState.setIn(["sentences", testSentence.get("id")], testSentence);
+const newWords = Map(testSentence.get("words").reduce((obj, word) => {
+  obj[word.get("id")] = word;
   return obj;
 }, {}));
-initialState = initialState.set("words",
-				initialState.get("words").merge(newWords));
+
+initialState = initialState.set("words", newWords);
 
 export function bootstrap (state = initialState, action) {
   switch (action.type) {
     case SENTENCE_TO_QUIVER:
-      const newSentence = new Sentence(action.payload);
-      const newWords = newSentence.words.reduce((obj, word) => {
-	obj[word.id] = word;
+      const newSentence = Sentence(action.payload);
+      const newWords = newSentence.get("words").reduce((obj, word) => {
+	obj[word.get("id")] = word;
 	return obj;
       }, {});
 
       return state.update("words", col => col.merge(newWords))
 		  .update("sentences", col =>
-		    col.set(newSentence.id, newSentence))
+		    col.set(newSentence.get("id"), newSentence))
 		  .update("quiver", col =>
-		    col.add(newSentence.id));
+		    col.add(newSentence.get("id")));
 
     case SENTENCE_TO_TARGET:
       const sentId = action.payload.sentenceId;
@@ -53,9 +54,8 @@ export function bootstrap (state = initialState, action) {
       const wordId = action.payload.wordId;
 
       return state.updateIn([ "words", wordId ], word => {
-	const newWord = _.clone(word);
-	newWord.active = newWord.active ? false : true;
-	return newWord;
+	const currentStatus = word.get("active");
+	return word.set("active", !currentStatus);
       });
   }
 

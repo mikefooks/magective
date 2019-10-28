@@ -1,7 +1,25 @@
 import _ from "lodash";
+import { Map, List } from "immutable";
 import uuid4 from "uuid4";
 
 
+function Sentence (sentenceStr) {
+  const id = uuid4();
+  const words = List(sentenceStr.split(" ").map(w => Word(w, id)));
+  const size = words.length;
+  
+  return Map({ id, sentenceStr, words, size });
+};
+
+function Word (word, parentId) {
+  const id = uuid4();
+  const size = word.length;
+  const active = true;
+
+  return Map({ id, word, parentId, size, active });
+}
+
+/*
 class Sentence {
   constructor (sentence) {
     this.id = uuid4();
@@ -29,6 +47,8 @@ class Word {
     this.active = true;
   }
 }
+
+*/
 
 export {
   Sentence,
