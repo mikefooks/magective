@@ -73,11 +73,12 @@ export function bootstrap (state = initialState, action) {
 
 function shiftFocusReducer (state, action) {
   const focusedKey = state.get("focused");
+  const focusedObj = state.getIn(["objects", focusedKey]);
   let newFocusedKey;
 
   switch (action.payload.direction) {
+
     case DIRECTIONS.LEFT:
-      const focusedObj = state.getIn(["objects", focusedKey]);
       
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
@@ -87,18 +88,42 @@ function shiftFocusReducer (state, action) {
 	  newFocusedKey = parentKey;
 	} else {
 	  const focusedParent = state.getIn(["objects", parentKey]);
-	  newFocusedKey = focusedParent.getIn(["words", wordOrd-1, "id"]);
+	  const previousWordKey = focusedParent.getIn(["words", wordOrd-1, "id"]);
+	  newFocusedKey = previousWordKey;
 	}
 
       } else if (focusedObj.get("type") == "Sentence") {
 	const size = focusedObj.get("size");
 	const lastWordKey = focusedObj.getIn(["words", size-1, "id"]);
-
 	newFocusedKey = lastWordKey;
       }
 
       break;
+
+    case DIRECTIONS.RIGHT:
+
+      if (focusedObj.get("type") == "Word") {
+	const parentKey = focusedObj.get("parentId");
+	const focusedParent = state.getIn(["objects", parentKey]);
+	const wordOrd = focusedObj.get("order");
+
+	if (wordOrd+1 >= focusedParent.get("size")) {
+	  console.log("in here.");
+	  newFocusedKey = parentKey;
+	} else {
+	  const newWordKey = focusedParent.getIn(["words", wordOrd+1, "id"]);
+	  newFocusedKey = newWordKey;
+	}
+	
+      } else if (focusedObj.get("type") == "Sentence") {
+	const firstWordKey = focusedObj.getIn(["words", 0, "id"]);
+	newFocusedKey = firstWordKey;
+      }
+
+      break;
+    
     default:
+
       newFocusedKey = focusedKey;
   }
 
