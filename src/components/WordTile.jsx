@@ -5,7 +5,7 @@ import { switchActivateWord } from "../state_mgmt/actions";
 
 
 const mapStateToProps = (state, ownProps) => {
-  const word = state.getIn(["words", ownProps.wordId])
+  const word = state.getIn(["objects", ownProps.wordId])
   const isFocused = state.get("focused") == ownProps.wordId;
 
   return { word, isFocused };

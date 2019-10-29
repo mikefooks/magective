@@ -9,7 +9,7 @@ import { sentenceToTarget } from "../state_mgmt/actions";
 let wordCounter = 0;
 
 const mapStateToProps = (state, ownProps) => {
-  const sentence = state.getIn(["sentences", ownProps.sentenceId]);
+  const sentence = state.getIn(["objects", ownProps.sentenceId]);
   const isFocused = state.get("focused") == ownProps.sentenceId;
 
   return { sentence, isFocused };
