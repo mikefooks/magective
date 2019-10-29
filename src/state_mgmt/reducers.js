@@ -12,10 +12,10 @@ import {
   DIRECTIONS
 } from "./actions";
 
-const testSentence = Sentence("This is pretty cool and I'm confident it'll all work out.");
+const testSentence = Sentence("Instructions to follow.");
 
 let initialState = Map({
-  focused: testSentence.getIn(["words", 0, "id"]),
+  focused: testSentence.getIn(["words", 2, "id"]),
   objects: Map(),
   target: OrderedSet(),
   quiver: OrderedSet([ testSentence.get("id") ])
@@ -65,8 +65,42 @@ export function bootstrap (state = initialState, action) {
       });
 
     case SHIFT_FOCUS:
-      const direction = action.payload.direction;
+      return shiftFocusReducer(state, action);
   }
 
   return state;
+}
+
+function shiftFocusReducer (state, action) {
+  const focusedKey = state.get("focused");
+  let newFocusedKey;
+
+  switch (action.payload.direction) {
+    case DIRECTIONS.LEFT:
+      const focusedObj = state.getIn(["objects", focusedKey]);
+      
+      if (focusedObj.get("type") == "Word") {
+	const parentKey = focusedObj.get("parentId");
+	const wordOrd = focusedObj.get("order");
+	
+	if (wordOrd == 0) {
+	  newFocusedKey = parentKey;
+	} else {
+	  const focusedParent = state.getIn(["objects", parentKey]);
+	  newFocusedKey = focusedParent.getIn(["words", wordOrd-1, "id"]);
+	}
+
+      } else if (focusedObj.get("type") == "Sentence") {
+	const size = focusedObj.get("size");
+	const lastWordKey = focusedObj.getIn(["words", size-1, "id"]);
+
+	newFocusedKey = lastWordKey;
+      }
+
+      break;
+    default:
+      newFocusedKey = focusedKey;
+  }
+
+  return state.set("focused", newFocusedKey);
 }

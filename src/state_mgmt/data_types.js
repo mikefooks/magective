@@ -5,20 +5,20 @@ import uuid4 from "uuid4";
 
 function Sentence (sentenceStr) {
   const id = uuid4();
-  const words = List(sentenceStr.split(" ").map(w => Word(w, id)));
-  const size = words.length;
+  const words = List(sentenceStr.split(" ").map((w, ord) => Word(w, id, ord)));
+  const size = words.size;
   const type = "Sentence";
   
   return Map({ id, sentenceStr, words, size, type });
 };
 
-function Word (word, parentId) {
+function Word (word, parentId, order) {
   const id = uuid4();
   const size = word.length;
   const active = true;
   const type = "Word";
 
-  return Map({ id, word, parentId, size, active, type });
+  return Map({ id, word, parentId, size, active, type, order });
 }
 
 export {
