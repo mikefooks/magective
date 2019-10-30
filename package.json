@@ -1,10 +1,10 @@
 {
-  "name": "letterthink",
+  "name": "magective",
   "version": "1.0.0",
   "description": "the fun web frontend for emerson",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/jest",
     "build": "webpack --mode production"
   },
   "jest": {
@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
-    "lodash": "^4.17.15",
     "mousetrap": "^1.6.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

@@ -1,6 +1,5 @@
-import _ from "lodash";
 import uuid4 from "uuid4";
-import { Map, OrderedSet } from "immutable";
+import { Map, List } from "immutable";
 
 import { Sentence } from "./data_types";
 
@@ -9,16 +8,16 @@ import {
   SENTENCE_TO_QUIVER,
   SWITCH_ACTIVATE_WORD,
   SHIFT_FOCUS,
-  DIRECTIONS
+  DIRECTION
 } from "./actions";
 
-const testSentence = Sentence("Instructions to follow.");
+const testSentence = Sentence("Instructions to follow.", 0);
 
 let initialState = Map({
   focused: testSentence.getIn(["words", 2, "id"]),
   objects: Map(),
-  target: OrderedSet(),
-  quiver: OrderedSet([ testSentence.get("id") ])
+  target: List(),
+  quiver: List.of(testSentence.get("id"))
 });
 
 initialState = initialState.setIn(["objects", testSentence.get("id")],
@@ -36,25 +35,25 @@ initialState = initialState.update("objects", col => {
 export function bootstrap (state = initialState, action) {
   switch (action.type) {
     case SENTENCE_TO_QUIVER:
-      const newSentence = Sentence(action.payload);
+      const quiverLength = state.get("quiver").size;
+      const newSentence = Sentence(action.payload, quiverLength);
       const newWords = newSentence.get("words").reduce((obj, word) => {
 	obj[word.get("id")] = word;
 	return obj;
       }, {});
 
-      return state.update("objects", col => {
-	return col.merge(newWords)
-		  .set(newSentence.get("id"), newSentence);
-      })
+      return state.update("objects", col =>
+	col.merge(newWords)
+	   .set(newSentence.get("id"), newSentence))
 		  .update("quiver", col =>
-		    col.add(newSentence.get("id")));
+		    col.push(newSentence.get("id")));
       
     case SENTENCE_TO_TARGET:
       const sentId = action.payload.sentenceId;
       return state.update("quiver", col =>
 	            col.filterNot(id => id == sentId))
 		  .update("target", col =>
-		    col.add(sentId));
+		    col.push(sentId));
 
     case SWITCH_ACTIVATE_WORD:
       const wordId = action.payload.wordId;
@@ -71,6 +70,13 @@ export function bootstrap (state = initialState, action) {
   return state;
 }
 
+
+/*
+DIRECTIONL.LEFT and DIRECTION.RIGHT control 
+word-level focus, whereas DIRECTION.UP and
+DIRECTION.DOWN control sentence-level focus.
+*/
+
 function shiftFocusReducer (state, action) {
   const focusedKey = state.get("focused");
   const focusedObj = state.getIn(["objects", focusedKey]);
@@ -78,7 +84,7 @@ function shiftFocusReducer (state, action) {
 
   switch (action.payload.direction) {
 
-    case DIRECTIONS.LEFT:
+    case DIRECTION.LEFT:
       
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
@@ -100,7 +106,7 @@ function shiftFocusReducer (state, action) {
 
       break;
 
-    case DIRECTIONS.RIGHT:
+    case DIRECTION.RIGHT:
 
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
@@ -108,7 +114,6 @@ function shiftFocusReducer (state, action) {
 	const wordOrd = focusedObj.get("order");
 
 	if (wordOrd+1 >= focusedParent.get("size")) {
-	  console.log("in here.");
 	  newFocusedKey = parentKey;
 	} else {
 	  const newWordKey = focusedParent.getIn(["words", wordOrd+1, "id"]);
@@ -121,7 +126,26 @@ function shiftFocusReducer (state, action) {
       }
 
       break;
-    
+
+    case DIRECTION.UP:
+      if (focusedObj.get("type") == "Word") {
+	const parentKey = focusedObj.get("parentId");
+	newFocusedKey = parentKey;
+      } else if (focusedObj.get("type") == "Sentence") {
+	const sentenceOrd = focusedObj.get("order");
+	if (sentenceOrd <= 0) {
+	  const quiverLength = state.get("quiver").size;
+	  const quiver = state.get("quiver");
+	  const lastSentenceKey = quiver.get(quiverLength-1);
+	  newFocusedKey = lastSentenceKey;
+	} else {
+	  const prevSentenceKey = state.getIn(["quiver", sentenceOrd-1]);
+	  newFocusedKey = prevSentenceKey;
+	}
+      }
+
+      break;
+      
     default:
 
       newFocusedKey = focusedKey;

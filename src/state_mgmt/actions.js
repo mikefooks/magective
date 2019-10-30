@@ -3,7 +3,7 @@ export const SENTENCE_TO_QUIVER = "SENTENCE_TO_QUIVER";
 export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
 
-export const DIRECTIONS = Object.freeze({
+export const DIRECTION = Object.freeze({
   UP: Symbol("up"),
   DOWN: Symbol("down"),
   LEFT: Symbol("left"),
