@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 
-import { bootstrap } from "./reducers";
+import { bootstrap } from "./reducers/entry";
 
 const store = createStore(bootstrap);
 

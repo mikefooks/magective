@@ -2,6 +2,9 @@ export const SENTENCE_TO_TARGET = "SENTENCE_TO_TARGET";
 export const SENTENCE_TO_QUIVER = "SENTENCE_TO_QUIVER";
 export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
+export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
+
+
 
 export const DIRECTION = Object.freeze({
   UP: Symbol("up"),
@@ -41,5 +44,11 @@ export function shiftFocus (direction) {
     payload: {
       direction
     }
+  };
+}
+
+export function toggleEditMode () {
+  return {
+    type: TOGGLE_EDIT_MODE
   };
 }

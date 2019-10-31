@@ -7,8 +7,9 @@ import { switchActivateWord } from "../state_mgmt/actions";
 const mapStateToProps = (state, ownProps) => {
   const word = state.getIn(["objects", ownProps.wordId])
   const isFocused = state.get("focused") == ownProps.wordId;
+  const editMode = state.get("editMode");
 
-  return { word, isFocused };
+  return { word, isFocused, editMode };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -20,9 +21,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export const WordTile = ({ word, isFocused, switchActivate }) => {
+export const WordTile = ({ word, isFocused, editMode, switchActivate }) => {
   const wordStr = word.get("word");
   const active = word.get("active") ? "active" : "retired";
+  const editModeStyles = { display: editMode ? "inline-block" : "none" }
   
   return (
     <div className={ isFocused ? "wordTile focused" : "wordTile" }>
@@ -31,6 +33,8 @@ export const WordTile = ({ word, isFocused, switchActivate }) => {
 	  onClick={switchActivate}>
 	    {wordStr}
 	</h1>
+	<input type="text"
+	       style={ editModeStyles } />
     </div>
   );
 }

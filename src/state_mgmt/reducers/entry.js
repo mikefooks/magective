@@ -1,20 +1,22 @@
 import uuid4 from "uuid4";
 import { Map, List } from "immutable";
 
-import { Sentence } from "./data_types";
+import { Sentence } from "../data_types";
 
 import {
   SENTENCE_TO_TARGET,
   SENTENCE_TO_QUIVER,
   SWITCH_ACTIVATE_WORD,
   SHIFT_FOCUS,
+  TOGGLE_EDIT_MODE,
   DIRECTION
-} from "./actions";
+} from "../actions";
 
 const testSentence = Sentence("Instructions to follow.", 0);
 
 let initialState = Map({
   focused: testSentence.getIn(["words", 2, "id"]),
+  editMode: false,
   objects: Map(),
   target: List(),
   quiver: List.of(testSentence.get("id"))
@@ -65,11 +67,14 @@ export function bootstrap (state = initialState, action) {
 
     case SHIFT_FOCUS:
       return shiftFocusReducer(state, action);
+
+    case TOGGLE_EDIT_MODE:
+      const newState = state.update("editMode", mode => !mode)
+      return newState;    
   }
 
   return state;
 }
-
 
 /*
 DIRECTIONL.LEFT and DIRECTION.RIGHT control 
