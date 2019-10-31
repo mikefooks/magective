@@ -145,7 +145,33 @@ function shiftFocusReducer (state, action) {
       }
 
       break;
-      
+
+    case DIRECTION.DOWN:
+      const quiver = state.get("quiver");
+
+
+      if (focusedObj.get("type") == "Word") {
+	const parentKey = focusedObj.get("parentId");
+	const nextSentenceKey = quiver.get(quiver.indexOf(parentKey) + 1);
+
+	const isLast = nextSentenceKey == undefined;
+
+	// if the parent sentence is the last in the quiver, focus
+	// on the parent. Otherwise, focus on the next sentence.
+	newFocusedKey = isLast ? parentKey : nextSentenceKey;
+
+      } else if (focusedObj.get("type") == "Sentence") {
+	const focusedKey = focusedObj.get("id");
+	const nextSentenceKey = quiver.get(quiver.indexOf(focusedKey) + 1);
+	
+	const isLast = nextSentenceKey == undefined;
+
+	newFocusedKey = isLast ? quiver.get(0) : nextSentenceKey;
+
+      }
+
+      break;
+
     default:
 
       newFocusedKey = focusedKey;

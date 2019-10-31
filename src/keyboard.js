@@ -4,6 +4,9 @@ import { shiftFocus, DIRECTION } from "./state_mgmt/actions.js";
 
 
 Mousetrap.bind(["meta+h", "alt+h"], (e, combo) => {
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
   store.dispatch(shiftFocus(DIRECTION.LEFT));
 });
 
