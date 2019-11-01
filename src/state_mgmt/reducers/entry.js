@@ -1,7 +1,9 @@
+import React from "react";
 import uuid4 from "uuid4";
 import { Map, List } from "immutable";
 
 import { Sentence } from "../data_types";
+import shiftFocusReducer from "./shift_focus";
 
 import {
   SENTENCE_TO_TARGET,
@@ -9,6 +11,7 @@ import {
   SWITCH_ACTIVATE_WORD,
   SHIFT_FOCUS,
   TOGGLE_EDIT_MODE,
+  UPDATE_EDITED_WORD,
   DIRECTION
 } from "../actions";
 
@@ -45,11 +48,10 @@ export function bootstrap (state = initialState, action) {
       }, {});
 
       return state.update("objects", col =>
-	col.merge(newWords)
-	   .set(newSentence.get("id"), newSentence))
+	col.merge(newWords).set(newSentence.get("id"), newSentence))
 		  .update("quiver", col =>
 		    col.push(newSentence.get("id")));
-      
+    
     case SENTENCE_TO_TARGET:
       const sentId = action.payload.sentenceId;
       return state.update("quiver", col =>
@@ -69,118 +71,20 @@ export function bootstrap (state = initialState, action) {
       return shiftFocusReducer(state, action);
 
     case TOGGLE_EDIT_MODE:
-      const newState = state.update("editMode", mode => !mode)
-      return newState;    
+      return state.update("editMode", mode => !mode);
+
+    case UPDATE_EDITED_WORD:
+      return updateEditedWordReducer(state, action);
   }
 
   return state;
 }
 
-/*
-DIRECTIONL.LEFT and DIRECTION.RIGHT control 
-word-level focus, whereas DIRECTION.UP and
-DIRECTION.DOWN control sentence-level focus.
-*/
+function updateEditedWordReducer (state, action) {
+  const wordId = action.payload.wordId;
+  const newWord = action.payload.newWord;
 
-function shiftFocusReducer (state, action) {
-  const focusedKey = state.get("focused");
-  const focusedObj = state.getIn(["objects", focusedKey]);
-  let newFocusedKey;
-
-  switch (action.payload.direction) {
-
-    case DIRECTION.LEFT:
-      
-      if (focusedObj.get("type") == "Word") {
-	const parentKey = focusedObj.get("parentId");
-	const wordOrd = focusedObj.get("order");
-	
-	if (wordOrd == 0) {
-	  newFocusedKey = parentKey;
-	} else {
-	  const focusedParent = state.getIn(["objects", parentKey]);
-	  const previousWordKey = focusedParent.getIn(["words", wordOrd-1, "id"]);
-	  newFocusedKey = previousWordKey;
-	}
-
-      } else if (focusedObj.get("type") == "Sentence") {
-	const size = focusedObj.get("size");
-	const lastWordKey = focusedObj.getIn(["words", size-1, "id"]);
-	newFocusedKey = lastWordKey;
-      }
-
-      break;
-
-    case DIRECTION.RIGHT:
-
-      if (focusedObj.get("type") == "Word") {
-	const parentKey = focusedObj.get("parentId");
-	const focusedParent = state.getIn(["objects", parentKey]);
-	const wordOrd = focusedObj.get("order");
-
-	if (wordOrd+1 >= focusedParent.get("size")) {
-	  newFocusedKey = parentKey;
-	} else {
-	  const newWordKey = focusedParent.getIn(["words", wordOrd+1, "id"]);
-	  newFocusedKey = newWordKey;
-	}
-	
-      } else if (focusedObj.get("type") == "Sentence") {
-	const firstWordKey = focusedObj.getIn(["words", 0, "id"]);
-	newFocusedKey = firstWordKey;
-      }
-
-      break;
-
-    case DIRECTION.UP:
-      if (focusedObj.get("type") == "Word") {
-	const parentKey = focusedObj.get("parentId");
-	newFocusedKey = parentKey;
-      } else if (focusedObj.get("type") == "Sentence") {
-	const sentenceOrd = focusedObj.get("order");
-	if (sentenceOrd <= 0) {
-	  const quiverLength = state.get("quiver").size;
-	  const quiver = state.get("quiver");
-	  const lastSentenceKey = quiver.get(quiverLength-1);
-	  newFocusedKey = lastSentenceKey;
-	} else {
-	  const prevSentenceKey = state.getIn(["quiver", sentenceOrd-1]);
-	  newFocusedKey = prevSentenceKey;
-	}
-      }
-
-      break;
-
-    case DIRECTION.DOWN:
-      const quiver = state.get("quiver");
-
-
-      if (focusedObj.get("type") == "Word") {
-	const parentKey = focusedObj.get("parentId");
-	const nextSentenceKey = quiver.get(quiver.indexOf(parentKey) + 1);
-
-	const isLast = nextSentenceKey == undefined;
-
-	// if the parent sentence is the last in the quiver, focus
-	// on the parent. Otherwise, focus on the next sentence.
-	newFocusedKey = isLast ? parentKey : nextSentenceKey;
-
-      } else if (focusedObj.get("type") == "Sentence") {
-	const focusedKey = focusedObj.get("id");
-	const nextSentenceKey = quiver.get(quiver.indexOf(focusedKey) + 1);
-	
-	const isLast = nextSentenceKey == undefined;
-
-	newFocusedKey = isLast ? quiver.get(0) : nextSentenceKey;
-
-      }
-
-      break;
-
-    default:
-
-      newFocusedKey = focusedKey;
-  }
-
-  return state.set("focused", newFocusedKey);
+  return state.updateIn(["objects", wordId], word => {
+    return word.set("wordStr", newWord);
+  });  
 }

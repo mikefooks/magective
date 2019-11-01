@@ -12,13 +12,13 @@ function Sentence (sentenceStr, order) {
   return Map({ id, sentenceStr, words, size, type, order });
 };
 
-function Word (word, parentId, order) {
+function Word (wordStr, parentId, order) {
   const id = uuid4();
-  const size = word.length;
+  const size = wordStr.length;
   const active = true;
   const type = "Word";
 
-  return Map({ id, word, parentId, size, active, type, order });
+  return Map({ id, wordStr, parentId, size, active, type, order });
 }
 
 export {

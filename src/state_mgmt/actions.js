@@ -3,7 +3,7 @@ export const SENTENCE_TO_QUIVER = "SENTENCE_TO_QUIVER";
 export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
 export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
-
+export const UPDATE_EDITED_WORD = "UPDATE_EDITED_WORD";
 
 
 export const DIRECTION = Object.freeze({
@@ -50,5 +50,15 @@ export function shiftFocus (direction) {
 export function toggleEditMode () {
   return {
     type: TOGGLE_EDIT_MODE
+  };
+}
+
+export function updateEditedWord (newWord, wordId) {
+  return {
+    type: UPDATE_EDITED_WORD,
+    payload: {
+      newWord,
+      wordId
+    }
   };
 }

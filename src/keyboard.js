@@ -2,6 +2,7 @@ import Mousetrap from "mousetrap";
 import store from "./state_mgmt/store.js";
 import { shiftFocus,
 	 toggleEditMode,
+	 updateEditedWord,
 	 DIRECTION } from "./state_mgmt/actions.js";
 
 
@@ -22,5 +23,23 @@ Mousetrap.bind(["meta+l", "alt+l"], () => {
 });
 
 Mousetrap.bind(["meta+enter", "alt+enter"], (e, combo) => {
-  store.dispatch(toggleEditMode());
+  const state = store.getState();
+  const wordId = state.get("focused");  
+  const inputEl = document.getElementById("input-" + wordId);
+  
+  if (!state.get("editMode")) {
+    store.dispatch(toggleEditMode());
+    inputEl.focus();
+
+  } else {
+    store.dispatch(updateEditedWord(inputEl.value, wordId));
+    store.dispatch(toggleEditMode());
+    inputEl.value = "";
+    inputEl.blur();
+  }
+});
+
+Mousetrap.bind(["meta+space", "alt+space"], (e, combo) => {
+  const inputEl = document.getElementById("sentence-input");
+  inputEl.focus();
 });

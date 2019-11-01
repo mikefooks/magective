@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 
 import MainDisplay from "./components/MainDisplay.jsx";
 import store from "./state_mgmt/store";
-import style from "./styles/main.scss";
 import keyboard from "./keyboard.js";
+import style from "./styles/main.scss";
 
 const wrapper = document.getElementById("container");
 

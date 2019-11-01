@@ -13,7 +13,9 @@ const handleClick = (evt) => {
 const SentenceEntry = (props) => {
   return (
     <div className="sentenceEntry">
-	<input type="text" id="sentenceInput"/>
+	<input type="text"
+	       id="sentence-input"
+	       className="mousetrap" />
 	<button onClick={handleClick}>Done</button>
     </div>
   );
