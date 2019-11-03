@@ -15,8 +15,13 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export const SentenceTile = ({ sentence, isFocused, sentenceToTarget }) => {
-  const tiles = sentence.get("words").map(word => {
-    return <WordTile key={wordCounter++} wordId={word.get("id")} />
+  const sentLen = sentence.get("size");
+  const tiles = sentence.get("words").map((word, idx) => {
+    const tile = <WordTile key={wordCounter++}
+			   isFirst={ idx == 0 }
+			   isLast={ idx >= sentLen-1 }
+                           wordId={word.get("id")} />
+    return tile;
   });
   
   return (

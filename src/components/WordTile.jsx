@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { switchActivateWord } from "../state_mgmt/actions";
 
+const capitalize = wordStr => wordStr[0].toUpperCase() + wordStr.slice(1);
 
 const mapStateToProps = (state, ownProps) => {
   const word = state.getIn(["objects", ownProps.wordId])
@@ -13,11 +14,24 @@ const mapStateToProps = (state, ownProps) => {
   return { word, isFocused, editMode };
 }
 
-export const WordTile = ({ word, wordId, isFocused, editMode }) => {
-  const wordStr = word.get("wordStr");
+export const WordTile = ({ word,
+			   wordId,
+			   isFocused,
+			   isFirst,
+			   isLast,
+			   editMode }) => {
   const active = word.get("active") ? "active" : "retired";
   const editModeStyles = { display: editMode ? "inline" : "none" };
-  
+
+  let wordStr = word.get("wordStr");
+
+  if (isFirst) {
+    wordStr = capitalize(wordStr);
+  }
+  if (isLast) {
+    wordStr += ".";
+  }
+
   return (
     <div className={ isFocused ? "wordTile focused" : "wordTile" }>
 	<h1
