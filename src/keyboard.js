@@ -3,6 +3,7 @@ import store from "./state_mgmt/store.js";
 import { shiftFocus,
 	 toggleEditMode,
 	 updateEditedWord,
+	 deleteWord,
 	 DIRECTION }
 from "./state_mgmt/actions.js";
 
@@ -44,3 +45,14 @@ Mousetrap.bind(["meta+space", "alt+space"], (e, combo) => {
   const inputEl = document.getElementById("sentence-input");
   inputEl.focus();
 });
+
+/*
+This is pending.
+
+Mousetrap.bind(["meta+b", "alt+b"], (e, combo) => {
+  const state = store.getState();
+  const focusedId = state.get("focused");
+  const focusedChunk = state.getIn(["objects", focusedId]);
+  store.dispatch(deleteWord(focusedId));
+});
+*/

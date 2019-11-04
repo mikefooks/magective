@@ -5,6 +5,7 @@ export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
 export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
 export const UPDATE_EDITED_WORD = "UPDATE_EDITED_WORD";
+export const DELETE_WORD = "DELETE_WORD";
 
 
 export const DIRECTION = Object.freeze({
@@ -68,6 +69,15 @@ export function updateEditedWord (newWord, wordId) {
     type: UPDATE_EDITED_WORD,
     payload: {
       newWord,
+      wordId
+    }
+  };
+}
+
+export function deleteWord (wordId) {
+  return {
+    type: DELETE_WORD,
+    payload: {
       wordId
     }
   };

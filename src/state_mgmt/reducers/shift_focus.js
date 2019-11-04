@@ -11,13 +11,15 @@ export default function shiftFocusReducer (state, action) {
       
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
-	const wordOrd = focusedObj.get("order");
+	const wordIdList = state.getIn(["objects", parentKey, "words"])
+				.map(word => word.get("id"));
+	const prevWordIdx = wordIdList.indexOf(focusedKey) - 1;
 	
-	if (wordOrd == 0) {
+	if (prevWordIdx < 0) {
 	  newFocusedKey = parentKey;
 	} else {
 	  const focusedParent = state.getIn(["objects", parentKey]);
-	  const previousWordKey = focusedParent.getIn(["words", wordOrd-1, "id"]);
+	  const previousWordKey = focusedParent.getIn(["words", prevWordIdx, "id"]);
 	  newFocusedKey = previousWordKey;
 	}
 
@@ -34,13 +36,15 @@ export default function shiftFocusReducer (state, action) {
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
 	const focusedParent = state.getIn(["objects", parentKey]);
-	const wordOrd = focusedObj.get("order");
+	const wordIdList = focusedParent.get("words")
+					.map(word => word.get("id"));
+	const nextWordIdx = wordIdList.indexOf(focusedKey) + 1;
 
-	if (wordOrd+1 >= focusedParent.get("size")) {
-	  newFocusedKey = parentKey;
+	if (nextWordIdx >= wordIdList.size) {
+	  newFocusedKey = wordIdList.get(0);
 	} else {
-	  const newWordKey = focusedParent.getIn(["words", wordOrd+1, "id"]);
-	  newFocusedKey = newWordKey;
+	  const nextWordKey = focusedParent.getIn(["words", nextWordIdx, "id"]);
+	  newFocusedKey = nextWordKey;
 	}
 	
       } else if (focusedObj.get("type") == "Sentence") {
