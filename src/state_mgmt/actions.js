@@ -1,5 +1,6 @@
 export const SENTENCE_TO_TARGET = "SENTENCE_TO_TARGET";
-export const SENTENCE_TO_QUIVER = "SENTENCE_TO_QUIVER";
+export const INITIALIZE_WITH_SENTENCE = "INITIALIZE_WITH_SENTENCE";
+export const ADD_NEW_SENTENCE = "ADD_NEW_SENTENCE";
 export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
 export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
@@ -13,6 +14,15 @@ export const DIRECTION = Object.freeze({
   RIGHT: Symbol("right")		
 });
 
+export function initializeWithSentence (sentenceStr) {
+  return {
+    type: INITIALIZE_WITH_SENTENCE,
+    payload: {
+      sentenceStr
+    }
+  };
+}
+
 export function sentenceToTarget (sentenceId) {
   return {
     type: SENTENCE_TO_TARGET,
@@ -22,9 +32,9 @@ export function sentenceToTarget (sentenceId) {
   };
 }
 
-export function sentenceToQuiver (sentenceStr) {
+export function addNewSentence (sentenceStr) {
   return {
-    type: SENTENCE_TO_QUIVER,
+    type: ADD_NEW_SENTENCE,
     payload: sentenceStr
   };
 }

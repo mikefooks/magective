@@ -3,7 +3,8 @@ import store from "./state_mgmt/store.js";
 import { shiftFocus,
 	 toggleEditMode,
 	 updateEditedWord,
-	 DIRECTION } from "./state_mgmt/actions.js";
+	 DIRECTION }
+from "./state_mgmt/actions.js";
 
 
 Mousetrap.bind(["meta+h", "alt+h"], () => {
