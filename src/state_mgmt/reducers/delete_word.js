@@ -13,7 +13,10 @@ export default function deleteWordReducer (state, action) {
 
   return state.set("focused", previousWordId)
 	      .updateIn(["objects", focusedParent.get("id"), "words"], wordList => {
-		return wordList.delete(wordIdx);
+		console.log(wordList);
+		const newWordList = wordList.delete(wordIdx);
+		console.log(newWordList);
+		return newWordList;
 	      })
 	      .update("objects", mp => {
 		console.log(focusedParent);

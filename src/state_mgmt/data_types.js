@@ -11,9 +11,8 @@ function Sentence (sentenceStr) {
   const words = List(sentenceStr.split(" ")
 				.filter(w => w != "")
 				.map(w => Word(w, id)));
-  const size = words.size;
   
-  return Map({ id, sentenceStr, words, size, type });
+  return Map({ id, sentenceStr, words, type });
 };
 
 function Word (wordString, parentId, order) {

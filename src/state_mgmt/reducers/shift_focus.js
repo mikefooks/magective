@@ -24,7 +24,7 @@ export default function shiftFocusReducer (state, action) {
 	}
 
       } else if (focusedObj.get("type") == "Sentence") {
-	const size = focusedObj.get("size");
+	const size = focusedObj.get("words").size;
 	const lastWordKey = focusedObj.getIn(["words", size-1, "id"]);
 	newFocusedKey = lastWordKey;
       }
