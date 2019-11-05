@@ -6,9 +6,6 @@ export default function deleteWordReducer (state, action) {
 			       .map(w => w.get("id"))
 			       .indexOf(wordId);
 
-  console.log(wordId);
-  console.log(focusedParent);
-
   const previousWordId = focusedParent.getIn(["words", wordIdx-1, "id"] )
 
   return state.set("focused", previousWordId)

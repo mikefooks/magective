@@ -20,6 +20,3 @@ ReactDOM.render(
 
 const testSentence = "let's see if this works";
 store.dispatch(initializeWithSentence(testSentence));
-
-
-

@@ -3,7 +3,10 @@ import store from "./state_mgmt/store.js";
 import { shiftFocus,
 	 toggleEditMode,
 	 updateEditedWord,
+	 addWord,
 	 deleteWord,
+	 ADD_WORD_INSERT,
+	 ADD_WORD_APPEND,
 	 DIRECTION }
 from "./state_mgmt/actions.js";
 
@@ -50,4 +53,12 @@ Mousetrap.bind(["shift+backspace"], (e, combo) => {
   const state = store.getState();
   const focusedId = state.get("focused");
   store.dispatch(deleteWord(focusedId));
+});
+
+Mousetrap.bind("shift+i", (e, combo) => {
+  store.dispatch(addWord(ADD_WORD_INSERT));
+});
+
+Mousetrap.bind("shift+a", (e, combo) => {
+  store.dispatch(addWord(ADD_WORD_APPEND));
 });

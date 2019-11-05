@@ -8,7 +8,8 @@ import initializeWithSentenceReducer from "./initialize_with_sentence";
 import addNewSentenceReducer from "./add_new_sentence";
 import shiftFocusReducer from "./shift_focus";
 import updateEditedWordReducer from "./update_edited_word";
-import deleteWordReducer from "./delete_word.js";
+import addWordReducer from "./add_word";
+import deleteWordReducer from "./delete_word";
 
 import {
   INITIALIZE_WITH_SENTENCE,
@@ -17,6 +18,8 @@ import {
   SHIFT_FOCUS,
   TOGGLE_EDIT_MODE,
   UPDATE_EDITED_WORD,
+  ADD_WORD_INSERT,
+  ADD_WORD_APPEND,
   DELETE_WORD
 } from "../actions";
 
@@ -50,6 +53,12 @@ export function bootstrap (state = initialState, action) {
 
     case TOGGLE_EDIT_MODE:
       return state.update("editMode", mode => !mode);
+
+    case ADD_WORD_INSERT:
+      return addWordReducer(state, action);
+
+    case ADD_WORD_APPEND:
+      return addWordReducer(state, action);
 
     case UPDATE_EDITED_WORD:
       return updateEditedWordReducer(state, action);

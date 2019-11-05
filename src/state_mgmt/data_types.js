@@ -15,7 +15,7 @@ function Sentence (sentenceStr) {
   return Map({ id, sentenceStr, words, type });
 };
 
-function Word (wordString, parentId, order) {
+function Word (wordString, parentId) {
   let wordStr = wordString.toLowerCase();
   let endPunctuation = "";
   const punctEnd = punctEndRe.exec(wordStr);

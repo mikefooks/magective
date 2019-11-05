@@ -5,13 +5,15 @@ export const SHIFT_FOCUS = "SHIFT_FOCUS";
 export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
 export const UPDATE_EDITED_WORD = "UPDATE_EDITED_WORD";
 export const DELETE_WORD = "DELETE_WORD";
+export const ADD_WORD_INSERT = "ADD_WORD_INSERT";
+export const ADD_WORD_APPEND = "ADD_WORD_APPEND";
 
 
 export const DIRECTION = Object.freeze({
-  UP: Symbol("up"),
-  DOWN: Symbol("down"),
-  LEFT: Symbol("left"),
-  RIGHT: Symbol("right")		
+  UP: Symbol("UP"),
+  DOWN: Symbol("DOWN"),
+  LEFT: Symbol("LEFT"),
+  RIGHT: Symbol("RIGHT")		
 });
 
 export function initializeWithSentence (sentenceStr) {
@@ -62,6 +64,10 @@ export function updateEditedWord (newWord, wordId) {
       wordId
     }
   };
+}
+
+export function addWord (type) {
+  return { type };
 }
 
 export function deleteWord (wordId) {
