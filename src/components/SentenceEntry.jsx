@@ -6,7 +6,7 @@ import React from "react";
 
 const handleClick = (evt) => {
   let inputValue = evt.target.previousSibling.value;
-  store.dispatch(addNewSentence(inputValue));
+  store.dispatch(addNewSentence(inputValue.trim()));
   evt.target.previousSibling.value = "";
 }
   

@@ -5,14 +5,15 @@ import uuid4 from "uuid4";
 
 const punctEndRe = new RegExp("[;:,.-?!]$");
 
-function Sentence (sentenceStr, order) {
+function Sentence (sentenceStr) {
   const id = uuid4();
   const type = "Sentence";
   const words = List(sentenceStr.split(" ")
-				.map((w, ord) => Word(w, id, ord)));
+				.filter(w => w != "")
+				.map(w => Word(w, id)));
   const size = words.size;
   
-  return Map({ id, sentenceStr, words, size, type, order });
+  return Map({ id, sentenceStr, words, size, type });
 };
 
 function Word (wordString, parentId, order) {
@@ -36,8 +37,7 @@ function Word (wordString, parentId, order) {
 	       parentId,
 	       size,
 	       active,
-	       type,
-	       order });
+	       type });
 }
 
 export {

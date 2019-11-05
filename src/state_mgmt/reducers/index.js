@@ -14,17 +14,20 @@ import {
   INITIALIZE_WITH_SENTENCE,
   SENTENCE_TO_TARGET,
   ADD_NEW_SENTENCE,
-  SWITCH_ACTIVATE_WORD,
   SHIFT_FOCUS,
   TOGGLE_EDIT_MODE,
   UPDATE_EDITED_WORD,
-  DELETE_WORD,
-  DIRECTION
+  DELETE_WORD
 } from "../actions";
+
+import {
+  DIRECTION
+} from "../actions.js";
 
 const initialState = Map({
   focused: "",
   editMode: false,
+  editValue: "",
   objects: Map(),
   target: List(),
   quiver: List()
@@ -42,14 +45,6 @@ export function bootstrap (state = initialState, action) {
 	            col.filterNot(id => id == sentId))
 		  .update("target", col =>
 		    col.push(sentId));
-
-    case SWITCH_ACTIVATE_WORD:
-      const { wordId } = action.payload;
-
-      return state.updateIn([ "objects", wordId ], word => {
-	return word.set("active", !word.get("active"));
-      });
-
     case SHIFT_FOCUS:
       return shiftFocusReducer(state, action);
 

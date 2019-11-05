@@ -8,23 +8,23 @@ import { shiftFocus,
 from "./state_mgmt/actions.js";
 
 
-Mousetrap.bind(["meta+h", "alt+h"], () => {
+Mousetrap.bind(["shift+left"], () => {
   store.dispatch(shiftFocus(DIRECTION.LEFT));
 });
 
-Mousetrap.bind(["meta+j", "alt+j"], () => {
-  store.dispatch(shiftFocus(DIRECTION.DOWN));
-});
-
-Mousetrap.bind(["meta+k", "alt+k"], () => {
+Mousetrap.bind(["shift+up"], () => {
   store.dispatch(shiftFocus(DIRECTION.UP));
 });
 
-Mousetrap.bind(["meta+l", "alt+l"], () => {
+Mousetrap.bind(["shift+down"], () => {
+  store.dispatch(shiftFocus(DIRECTION.DOWN));
+});
+
+Mousetrap.bind(["shift+right"], () => {
   store.dispatch(shiftFocus(DIRECTION.RIGHT));
 });
 
-Mousetrap.bind(["meta+enter", "alt+enter"], (e, combo) => {
+Mousetrap.bind(["shift+enter"], (e, combo) => {
   const state = store.getState();
   const wordId = state.get("focused");  
   const inputEl = document.getElementById("input-" + wordId);
@@ -41,18 +41,13 @@ Mousetrap.bind(["meta+enter", "alt+enter"], (e, combo) => {
   }
 });
 
-Mousetrap.bind(["meta+space", "alt+space"], (e, combo) => {
+Mousetrap.bind(["shift+space"], (e, combo) => {
   const inputEl = document.getElementById("sentence-input");
   inputEl.focus();
 });
 
-/*
-This is pending.
-
-Mousetrap.bind(["meta+b", "alt+b"], (e, combo) => {
+Mousetrap.bind(["shift+backspace"], (e, combo) => {
   const state = store.getState();
   const focusedId = state.get("focused");
-  const focusedChunk = state.getIn(["objects", focusedId]);
   store.dispatch(deleteWord(focusedId));
 });
-*/

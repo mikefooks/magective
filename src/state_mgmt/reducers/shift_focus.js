@@ -55,19 +55,18 @@ export default function shiftFocusReducer (state, action) {
       break;
 
     case DIRECTION.UP:
+      
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
 	newFocusedKey = parentKey;
+
       } else if (focusedObj.get("type") == "Sentence") {
-	const sentenceOrd = focusedObj.get("order");
-	if (sentenceOrd <= 0) {
-	  const quiverLength = state.get("quiver").size;
-	  const quiver = state.get("quiver");
-	  const lastSentenceKey = quiver.get(quiverLength-1);
-	  newFocusedKey = lastSentenceKey;
+	if (focusedKey == state.getIn(["quiver", 0])){
+	  newFocusedKey = focusedKey;
 	} else {
-	  const prevSentenceKey = state.getIn(["quiver", sentenceOrd-1]);
-	  newFocusedKey = prevSentenceKey;
+	  const focusedIdx = state.get("quiver")
+				  .indexOf(focusedKey);
+	  newFocusedKey = state.getIn(["quiver", focusedIdx-1]);
 	}
       }
 
@@ -76,11 +75,9 @@ export default function shiftFocusReducer (state, action) {
     case DIRECTION.DOWN:
       const quiver = state.get("quiver");
 
-
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
 	const nextSentenceKey = quiver.get(quiver.indexOf(parentKey) + 1);
-
 	const isLast = nextSentenceKey == undefined;
 
 	// if the parent sentence is the last in the quiver, focus
@@ -89,7 +86,8 @@ export default function shiftFocusReducer (state, action) {
 
       } else if (focusedObj.get("type") == "Sentence") {
 	const focusedKey = focusedObj.get("id");
-	const nextSentenceKey = quiver.get(quiver.indexOf(focusedKey) + 1);
+	const focusedIdx = quiver.indexOf(focusedKey);
+	const nextSentenceKey = quiver.get(focusedIdx + 1);
 	
 	const isLast = nextSentenceKey == undefined;
 

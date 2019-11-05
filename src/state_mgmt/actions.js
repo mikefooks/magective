@@ -1,7 +1,6 @@
 export const SENTENCE_TO_TARGET = "SENTENCE_TO_TARGET";
 export const INITIALIZE_WITH_SENTENCE = "INITIALIZE_WITH_SENTENCE";
 export const ADD_NEW_SENTENCE = "ADD_NEW_SENTENCE";
-export const SWITCH_ACTIVATE_WORD = "SWITCH_ACTIVATE_WORD";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
 export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
 export const UPDATE_EDITED_WORD = "UPDATE_EDITED_WORD";
@@ -37,15 +36,6 @@ export function addNewSentence (sentenceStr) {
   return {
     type: ADD_NEW_SENTENCE,
     payload: sentenceStr
-  };
-}
-
-export function switchActivateWord (wordId) {
-  return {
-    type: SWITCH_ACTIVATE_WORD,
-    payload: {
-      wordId
-    }
   };
 }
 
