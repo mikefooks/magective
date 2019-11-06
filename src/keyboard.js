@@ -11,6 +11,15 @@ import { shiftFocus,
 from "./state_mgmt/actions.js";
 
 
+function focusAndClear (e, inputId, inputValue="") {
+  const inputEl = document.getElementById(inputId);
+  inputEl.value = inputValue;
+  inputEl.focus();
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+}
+
 Mousetrap.bind(["shift+left"], () => {
   store.dispatch(shiftFocus(DIRECTION.LEFT));
 });
@@ -29,11 +38,13 @@ Mousetrap.bind(["shift+right"], () => {
 
 Mousetrap.bind(["shift+enter"], (e, combo) => {
   const state = store.getState();
-  const wordId = state.get("focused");  
+  const wordId = state.get("focused");
+  const wordStr = state.getIn(["objects", wordId, "wordStr"]);
   const inputEl = document.getElementById("input-" + wordId);
   
   if (!state.get("editMode")) {
     store.dispatch(toggleEditMode());
+    inputEl.value = wordStr;
     inputEl.focus();
 
   } else {
@@ -45,8 +56,7 @@ Mousetrap.bind(["shift+enter"], (e, combo) => {
 });
 
 Mousetrap.bind(["shift+space"], (e, combo) => {
-  const inputEl = document.getElementById("sentence-input");
-  inputEl.focus();
+  focusAndClear(e, "sentence-input");
 });
 
 Mousetrap.bind(["shift+backspace"], (e, combo) => {
@@ -57,8 +67,16 @@ Mousetrap.bind(["shift+backspace"], (e, combo) => {
 
 Mousetrap.bind("shift+i", (e, combo) => {
   store.dispatch(addWord(ADD_WORD_INSERT));
+  const state = store.getState();
+  const focusedKey = state.get("focused");
+  focusAndClear(e, "input-" + focusedKey);
+
 });
 
 Mousetrap.bind("shift+a", (e, combo) => {
   store.dispatch(addWord(ADD_WORD_APPEND));
+  const state = store.getState();
+  const focusedKey = state.get("focused");
+  focusAndClear(e, "input-" + focusedKey);
 });
+
