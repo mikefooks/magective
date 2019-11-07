@@ -28,22 +28,22 @@ export default function updateEditedWordReducer (state, action) {
     const newWordObjs = List(newWordList.map(w => Word(w, sentenceId)));
     const firstWordId = newWordObjs.getIn([0, "id"]);
 
-    const newState = state.updateIn(["objects", sentenceId, "words"], lst => {
-                            return lst.delete(wordIdx);
-                          })
-			  .update("objects", mp => mp.delete(wordId));
+    return state.updateIn(["objects", sentenceId, "words"], lst => {
+                  return lst.delete(wordIdx)
+		            .splice(wordIdx,
+				    newWordObjs.length,
+				    ...newWordObjs);
+                })
+	        .update("objects", mp => {
+		  const newWordMapping = Map(newWordObjs.reduce((obj, w) => {
+		    obj[w.get("id")] = w;
+		    return obj;
+		  }, {}));
 
-    return newState.update("objects", mp => {
-		     const newWordMapping = Map(newWordObjs.reduce((obj, w) => {
-		       obj[w.get("id")] = w;
-		       return obj;
-		     }, {}));
-		     return mp.merge(newWordMapping);
-                   })
-		   .updateIn(["objects", sentenceId, "words"], lst => {
-                      return lst.splice(wordIdx, newWordObjs.length, ...newWordObjs);
-                   })
-		   .set("focused", firstWordId);
+		  return mp.delete(wordId)
+			   .merge(newWordMapping);
+                })
+		.set("focused", firstWordId);
     
   } else {
     return state;
