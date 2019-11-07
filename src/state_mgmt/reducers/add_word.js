@@ -13,11 +13,17 @@ export default function addWordReducer (state, action) {
   const newWord = Word("", parentKey);
   return state.update("objects", mp => mp.set(newWord.get("id"), newWord))
 	      .updateIn(["objects", parentKey, "words"], lst => {
-		console.log(type);
 		if (type == ADD_WORD_INSERT) {
 		  return lst.insert(focusedIdx, newWord);
 		} else if (type == ADD_WORD_APPEND) {
 		  return lst.insert(focusedIdx+1, newWord);
+		}
+	      })
+	      .updateIn(["objects", parentKey, "wordIds"], lst => {
+		if (type == ADD_WORD_INSERT) {
+		  return lst.insert(focusedIdx, newWord.get("id"));
+		} else if (type == ADD_WORD_APPEND) {
+		  return lst.insert(focusedIdx+1, newWord.get("id"));
 		}
 	      })
 	      .set("focused", newWord.get("id"))

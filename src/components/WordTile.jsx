@@ -23,8 +23,8 @@ export const WordTile = ({ word,
   let wordStr = word.get("wordStr");
 
   return (
-    <div className={ isFocused ? "wordTile focused" : "wordTile" }>
-	<h1>
+    <div className="wordTile">
+	<h1 className={ isFocused ? "focused" : null }>
 	    {wordStr}
 	</h1>
 	<input

@@ -17,20 +17,16 @@ font-display:auto;font-style:italic;font-weight:400;
 body {
     margin: 0;
     padding: 0;
-    background-color: #111;
-    color: #eee;
+    background-color: #eee;
+    color: #111;
 }
 
-h1, h2, h3, h4, h5, h6, p, small {
+h1, h2, h3, h4, h5, h6, p, small, input[type='text'] {
     font-family: cardo, serif;
     font-weight: 400;
     font-style: normal;
     margin: 0;
     padding: 0;
-}
-
-h1.retired {
-    color: #e01d1d;
 }
 
 div#container {
@@ -40,6 +36,7 @@ div#container {
 
 div.mainDisplay {
     display: block;
+    padding: 1em;
     height: 100%;
     width: 100%;
 }
@@ -47,24 +44,29 @@ div.mainDisplay {
 div.wordBoard {
     display: inline-block;
     vertical-align: top;
-    height: 100%;
-    width: 50%;
-}
-
-div.wordQuiver {
-    display: inline-block;
-    vertical-align: top;
+    overflow: scroll;
+    text-align: justify;
     height: 100%;
     width: 50%;
 }
 
 .focused {
-    outline: 1px red dashed;
+    background-color: #fff;
 }
 
 div.wordTile {
     display: inline-block;
-    margin-right: 1em;
+    position: relative;
+    margin: 0 0.5em;
+
+    h1 {
+	margin: 0;
+    }
+}
+
+div.sentenceTile {
+    width: 100%;
+    margin-bottom: 1em;
 }
 
 div.sentenceEntry {
@@ -77,6 +79,12 @@ div.sentenceEntry {
 input[type="text"] {
     font-size: 21px;
     line-height: 31px;
+    position: absolute;
+    width: inherit;
+    background-color: #222;
+    color: #222;
+    outline: none;
+    border: none;
 }
 
 button {
