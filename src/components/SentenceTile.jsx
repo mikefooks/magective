@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
   return { sentence, isFocused };
 }
 
-export const SentenceTile = ({ sentence, isFocused, sentenceToTarget }) => {
+export const SentenceTile = ({ sentence, isFocused }) => {
   const sentLen = sentence.get("size");
   const tiles = sentence.get("words").map((word, idx) => {
     const tile = <WordTile key={wordCounter++}

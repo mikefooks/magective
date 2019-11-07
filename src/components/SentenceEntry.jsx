@@ -1,16 +1,21 @@
-import store from "../state_mgmt/store";
+import React from "react";
+import { connect } from "react-redux";
+
 import { addNewSentence } from "../state_mgmt/actions";
 
-import React from "react";
 
-
-const handleClick = (evt) => {
-  let inputValue = evt.target.previousSibling.value;
-  store.dispatch(addNewSentence(inputValue.trim()));
-  evt.target.previousSibling.value = "";
-}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleClick: () => {
+      const inputEl = document.getElementById("sentence-input");
+      let inputValue = inputEl.value;
+      dispatch(addNewSentence(inputValue.trim()));
+      inputEl.value = "";
+    }    
+  };
+};
   
-const SentenceEntry = (props) => {
+const SentenceEntry = ({ handleClick }) => {
   return (
     <div className="sentenceEntry">
 	<input type="text"
@@ -21,4 +26,4 @@ const SentenceEntry = (props) => {
   );
 }
 
-export default SentenceEntry;
+export default connect(null, mapDispatchToProps)(SentenceEntry);

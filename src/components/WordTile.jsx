@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { switchActivateWord } from "../state_mgmt/actions";
 
 const mapStateToProps = (state, ownProps) => {
   const word = state.getIn(["objects", ownProps.wordId])
@@ -18,15 +17,14 @@ export const WordTile = ({ word,
 			   isFirst,
 			   isLast,
 			   editMode }) => {
-  const active = word.get("active") ? "active" : "retired";
+
   const editModeStyles = { display: editMode ? "inline" : "none" };
 
   let wordStr = word.get("wordStr");
 
   return (
     <div className={ isFocused ? "wordTile focused" : "wordTile" }>
-	<h1
-	  className={active}>
+	<h1>
 	    {wordStr}
 	</h1>
 	<input
