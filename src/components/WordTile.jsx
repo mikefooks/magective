@@ -3,24 +3,22 @@ import { connect } from "react-redux";
 
 
 const mapStateToProps = (state, ownProps) => {
-  const word = state.getIn(["objects", ownProps.wordId])
+  const wordStr = state.getIn(["objects", ownProps.wordId, "wordStr"]);
   const isFocused = state.get("focused") == ownProps.wordId;
   const editMode = state.get("editMode") &&
 		   state.get("focused") == ownProps.wordId;
 
-  return { word, isFocused, editMode };
+  return { wordStr, isFocused, editMode };
 }
 
-export const WordTile = ({ word,
-			   wordId,
+export const WordTile = ({ wordId,
+			   wordStr,
 			   isFocused,
 			   isFirst,
 			   isLast,
 			   editMode }) => {
 
   const editModeStyles = { display: editMode ? "inline" : "none" };
-
-  let wordStr = word.get("wordStr");
 
   return (
     <div className="wordTile">

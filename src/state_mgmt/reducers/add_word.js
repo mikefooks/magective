@@ -19,13 +19,6 @@ export default function addWordReducer (state, action) {
 		  return lst.insert(focusedIdx+1, newWord);
 		}
 	      })
-	      .updateIn(["objects", parentKey, "wordIds"], lst => {
-		if (type == ADD_WORD_INSERT) {
-		  return lst.insert(focusedIdx, newWord.get("id"));
-		} else if (type == ADD_WORD_APPEND) {
-		  return lst.insert(focusedIdx+1, newWord.get("id"));
-		}
-	      })
 	      .set("focused", newWord.get("id"))
 	      .set("editMode", true);
 }

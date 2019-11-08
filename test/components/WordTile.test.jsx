@@ -9,7 +9,8 @@ const mockWord = Word("hey");
 
 describe("WordTile", () => {
   const wrapperWithProps = shallow(<WordTile
-				     word={mockWord}/>);
+				     wordStr={mockWord.get("wordStr")}
+				     wordId={mockWord.get("id")} />);
 
   it("should exist", () => {
     expect(wrapperWithProps.length).toBe(1);
@@ -21,5 +22,10 @@ describe("WordTile", () => {
 
   it("displays the word correctly", () => {
     expect(wrapperWithProps.find("h1").text()).toBe("hey");
+  });
+
+  it("appends the word's input element.", () => {
+    const inputId = "#input-" + mockWord.get("id");
+    expect(wrapperWithProps.find(inputId).length).toBe(1);
   });
 });
