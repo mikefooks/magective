@@ -27,16 +27,18 @@ import {
   DIRECTION
 } from "../actions.js";
 
-const initialState = Map({
-  focused: "",
-  editMode: false,
-  editValue: "",
-  objects: Map(),
-  target: List(),
-  quiver: List()
-});
+export function getInitialState () {
+  return Map({
+    focused: "",
+    editMode: false,
+    editValue: "",
+    objects: Map(),
+    target: List(),
+    quiver: List()
+  });
+}
 
-export function bootstrap (state = initialState, action) {
+export function bootstrap (state = getInitialState(), action) {
   switch (action.type) {
     case INITIALIZE_WITH_SENTENCE:
       return initializeWithSentenceReducer(state, action);

@@ -4,8 +4,19 @@ import { Word } from "../data_types.js";
 
 export default function addWordReducer (state, action) {
   const { type } = action;
+
   const focusedKey = state.get("focused");
-  const parentKey = state.getIn(["objects", focusedKey, "parentId"]);
+  const focusedType = state.getIn(["objects", focusedKey, "type"]);
+
+  // TODO, if focused is at sentence level, append a new word either
+  // to the beginning or the end.
+  let parentKey;
+  if (focusedType == "Sentence") {
+    return state;
+  } else {
+    parentKey = state.getIn(["objects", focusedKey, "parentId"]);
+  }
+
   const focusedIdx = state.getIn(["objects", parentKey, "words"])
 			  .map(w => w.get("id"))
 			  .indexOf(focusedKey);
