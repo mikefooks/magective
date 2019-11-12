@@ -12,8 +12,12 @@ export default function updateEditedWordReducer (state, action) {
 
   const newWordStr = action.payload.newWord.trim();
   const newWordList = newWordStr.split(" ");
+
   
   if (newWordList.length == 1 && newWordList[0]) {
+    // TODO: should we retain the original word id or blow away
+    // the whole object and start again?
+    
     return state.updateIn(["objects", wordId], word => {
                   return word.set("wordStr", newWordStr);
                 });

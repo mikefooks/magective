@@ -37,6 +37,9 @@ Mousetrap.bind(["shift+right"], () => {
 });
 
 Mousetrap.bind(["shift+enter"], (e, combo) => {
+  // TODO: This should all be the in the reducer.
+  // All this state querying and manipulation has
+  // little to do with the keyboard.
   const state = store.getState();
   const wordId = state.get("focused");
   const wordStr = state.getIn(["objects", wordId, "wordStr"]);
