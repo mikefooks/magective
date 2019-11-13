@@ -13,7 +13,7 @@ import deleteWordReducer from "./delete_word";
 
 import {
   INITIALIZE_WITH_SENTENCE,
-  SENTENCE_TO_TARGET,
+  COMMIT_SENTENCE,
   ADD_NEW_SENTENCE,
   SHIFT_FOCUS,
   TOGGLE_EDIT_MODE,
@@ -33,8 +33,8 @@ export function getInitialState () {
     editMode: false,
     editValue: "",
     objects: Map(),
-    target: List(),
-    quiver: List()
+    committed: List(),
+    sandbox: List()
   });
 }
 
@@ -44,11 +44,11 @@ export function bootstrap (state = getInitialState(), action) {
       return initializeWithSentenceReducer(state, action);
     case ADD_NEW_SENTENCE:
       return addNewSentenceReducer(state, action);      
-    case SENTENCE_TO_TARGET:
+    case COMMIT_SENTENCE:
       const sentId = action.payload.sentenceId;
-      return state.update("quiver", col =>
+      return state.update("sandbox", col =>
 	            col.filterNot(id => id == sentId))
-		  .update("target", col =>
+		  .update("committed", col =>
 		    col.push(sentId));
     case SHIFT_FOCUS:
       return shiftFocusReducer(state, action);

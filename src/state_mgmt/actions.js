@@ -1,4 +1,4 @@
-export const SENTENCE_TO_TARGET = "SENTENCE_TO_TARGET";
+export const COMMIT_SENTENCE = "COMMIT_SENTENCE";
 export const INITIALIZE_WITH_SENTENCE = "INITIALIZE_WITH_SENTENCE";
 export const ADD_NEW_SENTENCE = "ADD_NEW_SENTENCE";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
@@ -25,9 +25,9 @@ export function initializeWithSentence (sentenceStr) {
   };
 }
 
-export function sentenceToTarget (sentenceId) {
+export function commitSentence (sentenceId) {
   return {
-    type: SENTENCE_TO_TARGET,
+    type: COMMIT_SENTENCE,
     payload: {
       sentenceId
     }

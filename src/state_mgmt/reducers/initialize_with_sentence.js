@@ -14,6 +14,6 @@ export default function initializeWithSentenceReducer (state, action) {
 
   return state.set("focused", sentId)
 	      .setIn(["objects", sentId], newSentence)
-	      .update("quiver", lst => lst.push(sentId))
+	      .update("sandbox", lst => lst.push(sentId))
 	      .update("objects", col => col.merge(newWords));
 }
