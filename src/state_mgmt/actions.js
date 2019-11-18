@@ -57,11 +57,10 @@ export function toggleEditMode () {
   };
 }
 
-export function updateEditedWord (newWord, wordId) {
+export function updateEditedWord (wordId) {
   return {
     type: UPDATE_EDITED_WORD,
     payload: {
-      newWord,
       wordId
     }
   };

@@ -10,9 +10,10 @@ export default function updateEditedWordReducer (state, action) {
 		       .map(w => w.get("id"))
 		       .indexOf(wordId);
 
-  const newWordStr = action.payload.newWord.trim();
+  const newWordStr = state.get("updateInputValue").trim();
   const newWordList = newWordStr.split(" ");
 
+  console.log(newWordList);
   
   if (newWordList.length == 1 && newWordList[0]) {
     // TODO: should we retain the original word id or blow away

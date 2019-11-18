@@ -37,11 +37,18 @@ Mousetrap.bind(["shift+right"], () => {
 });
 
 Mousetrap.bind(["shift+enter"], (e, combo) => {
-  const focusedId = store.getState().get("focused");
-  store.dispatch(toggleEditMode());
+  const state = store.getState();
+  const focusedId = state.get("focused");
+  const editMode = state.get("editMode");
 
-  const inputEl = document.getElementById("input-" + focusedId);
-  inputEl.focus();
+  if (editMode) {
+    store.dispatch(updateEditedWord(focusedId));
+    store.dispatch(toggleEditMode());
+  } else {
+    store.dispatch(toggleEditMode());
+    const inputEl = document.getElementById("input-" + focusedId);
+    inputEl.focus();
+  }
 });
 
 Mousetrap.bind(["shift+space"], (e, combo) => {
