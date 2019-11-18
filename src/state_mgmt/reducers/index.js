@@ -20,7 +20,8 @@ import {
   UPDATE_EDITED_WORD,
   ADD_WORD_INSERT,
   ADD_WORD_APPEND,
-  DELETE_WORD
+  DELETE_WORD,
+  CHANGE_UPDATE_INPUT
 } from "../actions";
 
 import {
@@ -31,6 +32,7 @@ export function getInitialState () {
   return Map({
     focused: "",
     editMode: false,
+    updateInputValue: "",
     editValue: "",
     objects: Map(),
     committed: List(),
@@ -42,19 +44,40 @@ export function bootstrap (state = getInitialState(), action) {
   switch (action.type) {
     case INITIALIZE_WITH_SENTENCE:
       return initializeWithSentenceReducer(state, action);
+
     case ADD_NEW_SENTENCE:
-      return addNewSentenceReducer(state, action);      
+      return addNewSentenceReducer(state, action);
+
     case COMMIT_SENTENCE:
       const sentId = action.payload.sentenceId;
       return state.update("sandbox", col =>
 	            col.filterNot(id => id == sentId))
 		  .update("committed", col =>
 		    col.push(sentId));
+
     case SHIFT_FOCUS:
-      return shiftFocusReducer(state, action);
+      if (state.get("editMode")) {
+	return state;
+      } else {
+	return shiftFocusReducer(state, action);
+      }
 
     case TOGGLE_EDIT_MODE:
-      return state.update("editMode", mode => !mode);
+      const focusedId = state.get("focused");
+      const focusedObj = state.getIn(["objects", focusedId]);
+      const focusedWord = focusedObj.get("wordStr");
+      const mode = state.get("editMode");
+
+      if (focusedObj.get("type") == "Sentence") {
+	return state;
+      }
+      
+      if (mode) {
+	return state.set("editMode", false);
+      } else {
+	return state.set("updateInputValue", focusedWord)
+		    .set("editMode", true);
+      }
 
     case ADD_WORD_INSERT:
       return addWordReducer(state, action);
@@ -67,6 +90,11 @@ export function bootstrap (state = getInitialState(), action) {
 
     case DELETE_WORD:
       return deleteWordReducer(state, action);
+
+    case CHANGE_UPDATE_INPUT:
+      let { wordValue } = action.payload;
+      
+      return state.set("updateInputValue", wordValue);
   }
 
   return state;

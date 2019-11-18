@@ -56,10 +56,13 @@ div.wordBoard {
 
 div.wordTile {
     display: inline-block;
+    position: relative;
     margin: 0 0.5em;
 
     h1 {
 	margin: 0;
+	font-size: 21px;
+	line-height: 31px;
     }
 }
 
@@ -75,10 +78,15 @@ div.sentenceEntry {
     bottom: 0px;
 }
 
+input.updateInput {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 input[type="text"] {
     font-size: 21px;
     line-height: 31px;
-    position: relative;
     type: 0px;
     width: inherit;
     background-color: #eee;

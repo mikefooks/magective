@@ -7,6 +7,7 @@ export const UPDATE_EDITED_WORD = "UPDATE_EDITED_WORD";
 export const DELETE_WORD = "DELETE_WORD";
 export const ADD_WORD_INSERT = "ADD_WORD_INSERT";
 export const ADD_WORD_APPEND = "ADD_WORD_APPEND";
+export const CHANGE_UPDATE_INPUT = "CHANGE_UPDATE_INPUT";
 
 
 export const DIRECTION = Object.freeze({
@@ -75,6 +76,15 @@ export function deleteWord (wordId) {
     type: DELETE_WORD,
     payload: {
       wordId
+    }
+  };
+}
+
+export function changeUpdateInput (wordValue) {
+  return {
+    type: CHANGE_UPDATE_INPUT,
+    payload: {
+      wordValue
     }
   };
 }
