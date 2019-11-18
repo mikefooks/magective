@@ -61,37 +61,37 @@ export default function shiftFocusReducer (state, action) {
 	newFocusedKey = parentKey;
 
       } else if (focusedObj.get("type") == "Sentence") {
-	if (focusedKey == state.getIn(["quiver", 0])){
+	if (focusedKey == state.getIn(["sandbox", 0])){
 	  newFocusedKey = focusedKey;
 	} else {
-	  const focusedIdx = state.get("quiver")
+	  const focusedIdx = state.get("sandbox")
 				  .indexOf(focusedKey);
-	  newFocusedKey = state.getIn(["quiver", focusedIdx-1]);
+	  newFocusedKey = state.getIn(["sandbox", focusedIdx-1]);
 	}
       }
 
       break;
 
     case DIRECTION.DOWN:
-      const quiver = state.get("quiver");
+      const sandbox = state.get("sandbox");
 
       if (focusedObj.get("type") == "Word") {
 	const parentKey = focusedObj.get("parentId");
-	const nextSentenceKey = quiver.get(quiver.indexOf(parentKey) + 1);
+	const nextSentenceKey = sandbox.get(sandbox.indexOf(parentKey) + 1);
 	const isLast = nextSentenceKey == undefined;
 
-	// if the parent sentence is the last in the quiver, focus
+	// if the parent sentence is the last in the sandbox, focus
 	// on the parent. Otherwise, focus on the next sentence.
 	newFocusedKey = isLast ? parentKey : nextSentenceKey;
 
       } else if (focusedObj.get("type") == "Sentence") {
 	const focusedKey = focusedObj.get("id");
-	const focusedIdx = quiver.indexOf(focusedKey);
-	const nextSentenceKey = quiver.get(focusedIdx + 1);
+	const focusedIdx = sandbox.indexOf(focusedKey);
+	const nextSentenceKey = sandbox.get(focusedIdx + 1);
 	
 	const isLast = nextSentenceKey == undefined;
 
-	newFocusedKey = isLast ? quiver.get(0) : nextSentenceKey;
+	newFocusedKey = isLast ? sandbox.get(0) : nextSentenceKey;
       }
 
       break;

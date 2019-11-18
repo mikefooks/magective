@@ -37,7 +37,7 @@ export function commitSentence (sentenceId) {
 export function addNewSentence (sentenceStr) {
   return {
     type: ADD_NEW_SENTENCE,
-    payload: sentenceStr
+    payload: { sentenceStr }
   };
 }
 

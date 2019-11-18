@@ -10,10 +10,10 @@ const MainDisplay = () => {
 	<div className="mainDisplay">
 	    <WordBoard
 	    id="wordBoard"
-	    role="target" />
+	    role="committed" />
 	    <WordBoard
 	    id="wordQuiver"
-	    role="quiver" />
+	    role="sandbox" />
 	</div>
 	<SentenceEntry />
     </div>

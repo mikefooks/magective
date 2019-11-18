@@ -10,10 +10,10 @@ let sentenceCounter = 1000;
 const mapStateToProps = (state, ownProps) => {
   let sentenceIds;
 
-  if (ownProps.role == "target") {
-    sentenceIds = state.get("target");
-  } else if (ownProps.role == "quiver") {
-    sentenceIds = state.get("quiver");
+  if (ownProps.role == "committed") {
+    sentenceIds = state.get("committed");
+  } else if (ownProps.role == "sandbox") {
+    sentenceIds = state.get("sandbox");
   }
   
   return { sentenceIds };
