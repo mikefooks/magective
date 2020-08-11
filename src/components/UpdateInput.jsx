@@ -12,7 +12,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     changeHandler: function (evt) {
-      console.log(evt.target.value);
       return dispatch(changeUpdateInput(evt.target.value));
     }
   }
@@ -20,14 +19,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const UpdateInput = ({ changeHandler, inputValue, wordId }) => {
   const inputId = "input-" + wordId;
-  
+
   return (
     <input type="text" id={ inputId }
-	   className="updateInput mousetrap"
-	   value={ inputValue }
-	   onChange={ changeHandler.bind(this) } />
+	         className="updateInput mousetrap"
+	         value={ inputValue }
+	         onChange={ changeHandler.bind(this) } />
   );
 };
 
 export default connect(mapStateToProps,
-		       mapDispatchToProps)(UpdateInput);
+		                   mapDispatchToProps)(UpdateInput);

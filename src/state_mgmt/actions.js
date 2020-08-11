@@ -1,6 +1,7 @@
 export const COMMIT_SENTENCE = "COMMIT_SENTENCE";
 export const INITIALIZE_WITH_SENTENCE = "INITIALIZE_WITH_SENTENCE";
 export const ADD_NEW_SENTENCE = "ADD_NEW_SENTENCE";
+export const FOCUS = "FOCUS";
 export const SHIFT_FOCUS = "SHIFT_FOCUS";
 export const TOGGLE_EDIT_MODE = "TOGGLE_EDIT_MODE";
 export const UPDATE_EDITED_WORD = "UPDATE_EDITED_WORD";
@@ -14,7 +15,7 @@ export const DIRECTION = Object.freeze({
   UP: Symbol("UP"),
   DOWN: Symbol("DOWN"),
   LEFT: Symbol("LEFT"),
-  RIGHT: Symbol("RIGHT")		
+  RIGHT: Symbol("RIGHT")
 });
 
 export function initializeWithSentence (sentenceStr) {
@@ -39,6 +40,15 @@ export function addNewSentence (sentenceStr) {
   return {
     type: ADD_NEW_SENTENCE,
     payload: { sentenceStr }
+  };
+}
+
+export function focus (sentenceId) {
+  return {
+    type: FOCUS,
+    payload: {
+      sentenceId
+    }
   };
 }
 

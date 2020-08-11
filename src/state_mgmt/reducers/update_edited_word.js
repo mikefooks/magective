@@ -13,45 +13,40 @@ export default function updateEditedWordReducer (state, action) {
   const newWordStr = state.get("updateInputValue").trim();
   const newWordList = newWordStr.split(" ");
 
-  console.log(newWordList);
-  
   if (newWordList.length == 1 && newWordList[0]) {
     // TODO: should we retain the original word id or blow away
     // the whole object and start again?
-    
+
     return state.updateIn(["objects", wordId], word => {
-                  return word.set("wordStr", newWordStr);
-                });
-    
+      return word.set("wordStr", newWordStr);
+    });
+
   } else if (newWordList.length == 1 && !newWordList[0]) {
     // Focus on wordIdx - 1 or, or some fallback if wordIdx == 0
 
     return state.updateIn(["objects", sentenceId, "words"], mp => {
-                  return mp.delete(wordIdx);
-                })
-		.update("objects", mp => mp.delete(wordId));
+      return mp.delete(wordIdx);
+    }).update("objects", mp => mp.delete(wordId));
 
   } else if (newWordList.length > 1) {
     const newWordObjs = List(newWordList.map(w => Word(w, sentenceId)));
     const firstWordId = newWordObjs.getIn([0, "id"]);
 
     return state.updateIn(["objects", sentenceId, "words"], lst => {
-		    return lst.delete(wordIdx)
-			      .splice(wordIdx,
-				      newWordObjs.length,
-				      ...newWordObjs);
-                })
-		.update("objects", mp => {
-		 const newWordMapping = Map(newWordObjs.reduce((obj, w) => {
-		   obj[w.get("id")] = w;
-		   return obj;
-		 }, {}));
-		 
-		 return mp.delete(wordId)
+		  return lst.delete(wordIdx)
+			  .splice(wordIdx,
+				        newWordObjs.length,
+				        ...newWordObjs);
+    }).update("objects", mp => {
+		  const newWordMapping = Map(newWordObjs.reduce((obj, w) => {
+		    obj[w.get("id")] = w;
+		    return obj;
+		  }, {}));
+
+		  return mp.delete(wordId)
 			  .merge(newWordMapping);
-                })
-		.set("focused", firstWordId);
-    
+    }).set("focused", firstWordId);
+
   } else {
     return state;
   }

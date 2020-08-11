@@ -4,16 +4,16 @@ export default function deleteWordReducer (state, action) {
   const parentId = word.get("parentId");
   const focusedParent = state.getIn(["objects", parentId]);
   const wordIdx = focusedParent.get("words")
-			       .map(w => w.get("id"))
-			       .indexOf(wordId);
+			  .map(w => w.get("id"))
+			  .indexOf(wordId);
 
-  const previousWordId = focusedParent.getIn(["words", wordIdx-1, "id"] )
+  const previousWordId = focusedParent.getIn(["words", wordIdx-1, "id"] );
 
   return state.set("focused", previousWordId)
-	      .updateIn(["objects", parentId, "words"], wordList => {
-		return wordList.delete(wordIdx);
-	      })
-	      .update("objects", mp => {
-		return mp.delete(wordId);
-	      });
+	  .updateIn(["objects", parentId, "words"], wordList => {
+		  return wordList.delete(wordIdx);
+	  })
+	  .update("objects", mp => {
+		  return mp.delete(wordId);
+	  });
 }

@@ -15,6 +15,7 @@ import {
   INITIALIZE_WITH_SENTENCE,
   COMMIT_SENTENCE,
   ADD_NEW_SENTENCE,
+  FOCUS,
   SHIFT_FOCUS,
   TOGGLE_EDIT_MODE,
   UPDATE_EDITED_WORD,
@@ -26,7 +27,7 @@ import {
 
 import {
   DIRECTION
-} from "../actions.js";
+} from "../actions";
 
 export function getInitialState () {
   return Map({
@@ -42,59 +43,62 @@ export function getInitialState () {
 
 export function bootstrap (state = getInitialState(), action) {
   switch (action.type) {
-    case INITIALIZE_WITH_SENTENCE:
-      return initializeWithSentenceReducer(state, action);
+  case INITIALIZE_WITH_SENTENCE:
+    return initializeWithSentenceReducer(state, action);
 
-    case ADD_NEW_SENTENCE:
-      return addNewSentenceReducer(state, action);
+  case ADD_NEW_SENTENCE:
+    return addNewSentenceReducer(state, action);
 
-    case COMMIT_SENTENCE:
-      const sentId = action.payload.sentenceId;
-      return state.update("sandbox", col =>
-	            col.filterNot(id => id == sentId))
-		  .update("committed", col =>
-		    col.push(sentId));
+  case COMMIT_SENTENCE:
+    const sentId = action.payload.sentenceId;
+    return state.update("sandbox", col =>
+	                      col.filterNot(id => id == sentId))
+		            .update("committed", col =>
+		                    col.push(sentId));
 
-    case SHIFT_FOCUS:
-      if (state.get("editMode")) {
-	return state;
-      } else {
-	return shiftFocusReducer(state, action);
-      }
+  case FOCUS:
+    return state.set("focused", action.payload.sentenceId);
 
-    case TOGGLE_EDIT_MODE:
-      const focusedId = state.get("focused");
-      const focusedObj = state.getIn(["objects", focusedId]);
-      const focusedWord = focusedObj.get("wordStr");
-      const mode = state.get("editMode");
+  case SHIFT_FOCUS:
+    if (state.get("editMode")) {
+	    return state;
+    } else {
+	    return shiftFocusReducer(state, action);
+    }
 
-      if (focusedObj.get("type") == "Sentence") {
-	return state;
-      }
-      
-      if (mode) {
-	return state.set("editMode", false);
-      } else {
-	return state.set("updateInputValue", focusedWord)
+  case TOGGLE_EDIT_MODE:
+    const focusedId = state.get("focused");
+    const focusedObj = state.getIn(["objects", focusedId]);
+    const focusedWord = focusedObj.get("wordStr");
+    const mode = state.get("editMode");
+
+    if (focusedObj.get("type") == "Sentence") {
+	    return state;
+    }
+
+    if (mode) {
+	    return state.set("editMode", false);
+    } else {
+	    return state.set("updateInputValue", focusedWord)
 		    .set("editMode", true);
-      }
+    }
 
-    case ADD_WORD_INSERT:
-      return addWordReducer(state, action);
+  case ADD_WORD_INSERT:
+    return addWordReducer(state, action);
 
-    case ADD_WORD_APPEND:
-      return addWordReducer(state, action);
+  case ADD_WORD_APPEND:
+    return addWordReducer(state, action);
 
-    case UPDATE_EDITED_WORD:
-      return updateEditedWordReducer(state, action);
+  case UPDATE_EDITED_WORD:
+    return updateEditedWordReducer(state, action);
 
-    case DELETE_WORD:
-      return deleteWordReducer(state, action);
+  case DELETE_WORD:
+    return deleteWordReducer(state, action);
 
-    case CHANGE_UPDATE_INPUT:
-      let { wordValue } = action.payload;
-      
-      return state.set("updateInputValue", wordValue);
+  case CHANGE_UPDATE_INPUT:
+    let { wordValue } = action.payload;
+
+    return state.set("updateInputValue", wordValue);
   }
 
   return state;
