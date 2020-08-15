@@ -57,7 +57,8 @@ export function bootstrap (state = getInitialState(), action) {
 		                    col.push(sentId));
 
   case FOCUS:
-    return state.set("focused", action.payload.sentenceId);
+    return state.set("focused", action.payload.sentenceId)
+      .set("editMode", false);
 
   case SHIFT_FOCUS:
     if (state.get("editMode")) {

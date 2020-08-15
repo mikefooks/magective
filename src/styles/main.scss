@@ -60,9 +60,9 @@ div.wordTile {
     margin: 0 0.5em;
 
     h1 {
-	margin: 0;
-	font-size: 21px;
-	line-height: 31px;
+	      margin: 0;
+	      font-size: 21px;
+	      line-height: 31px;
     }
 }
 
@@ -88,7 +88,7 @@ input[type="text"] {
     font-size: 21px;
     line-height: 31px;
     type: 0px;
-    width: inherit;
+    width: auto;
     background-color: #eee;
     color: #222;
     outline: none;
