@@ -1,7 +1,7 @@
 {
   "name": "magective",
   "version": "1.0.0",
-  "description": "the fun web frontend for emerson",
+  "description": "a word processor for poets.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest",
